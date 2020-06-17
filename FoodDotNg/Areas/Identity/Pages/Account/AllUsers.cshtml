@@ -1,0 +1,91 @@
+﻿@page
+@model FoodDotNg.Areas.Identity.Pages.Account.AllUsersModel
+@inject FoodDotNg.Data.FoodDotNgDbContext _context;
+@inject UserManager<FoodDotNg.Data.ApplicationUser> _userManagaer;
+@{
+    Layout = "_WriterLayout";
+
+    var users = _context.Users.ToList().OrderBy(u => u.UserName);
+}
+
+
+<!--Users-->
+<table class="table table-hover">
+    <caption>List of All Users!</caption>
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Role</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (User == null)
+        {
+            <tr>
+                <td colspan="2">No users</td>
+            </tr>
+        }
+
+        else
+        {
+            @foreach (var user in users)
+            {
+                var role = await _userManagaer.GetRolesAsync(user);
+
+    <tr>
+        <td scope="row">@user.Id</td>
+        <td>@user.UserName</td>
+        <td>@user.Email</td>
+        @foreach (var rol in role)
+        {
+            <td>@rol</td>
+        }
+        @if (role.Contains("Writer"))
+        {
+            <td>
+                <form method="post">
+                    <input hidden value="RemoveWriter" asp-for="@Model.Action" />
+                    <input hidden value="@user.Id" asp-for="@Model.UserId" />
+                    <button type="submit" asp-page-handler="EditUser" class="btn btn-danger" href="#">Remove Writer</button>
+                </form>
+            </td>
+            <td>
+                <form method="post">
+                    <input hidden value="MakeAdmin" asp-for="@Model.Action" />
+                    <input hidden value="@user.Id" asp-for="@Model.UserId" />
+                    <button type="submit" asp-page-handler="EditUser" class="btn btn-primary" href="#">Make Admin</button>
+                </form>
+            </td>
+
+        }
+        @if (role.Contains("Admin"))
+        {
+            <td>
+                <form method="post">
+                    <input hidden value="RemoveAdmin" asp-for="@Model.Action" />
+                    <input hidden value="@user.Id" asp-for="@Model.UserId" />
+                    <button type="submit" asp-page-handler="EditUser" class="btn btn-danger" href="#">Remove Admin</button>
+                </form>
+            </td>
+        }
+        @if (role.Contains("RandomUser"))
+        {
+            <td>
+                <form method="post">
+                    <input hidden value="MakeWriter" asp-for="@Model.Action" />
+                    <input hidden value="@user.Id" asp-for="@Model.UserId" />
+                    <button type="submit" asp-page-handler="EditUser" class="btn btn-primary" href="#">Make Writer</button>
+                </form>
+            </td>
+        }
+    </tr>
+            }
+        }
+
+
+    </tbody>
+</table>

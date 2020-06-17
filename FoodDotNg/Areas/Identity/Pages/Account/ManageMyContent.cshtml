@@ -1,0 +1,152 @@
+﻿@page
+@model FoodDotNg.Areas.Identity.Pages.Account.ManageMyContentModel
+@inject UserManager<ApplicationUser> _userManager
+@using Microsoft.AspNetCore.Http;
+@inject FoodDotNgDbContext _context
+@using FoodDotNg.Data
+@{
+    Layout = "_WriterLayout";
+    var user = await _userManager.GetUserAsync(User);
+    var articles = _context.Articles.Where(a => a.AuthorId == user.Id).ToList();
+    var recipes = _context.Recipes.Where(r => r.AuthorId == user.Id).ToList();
+    var events = _context.Events.Where(e => e.AuthorId == user.Id).ToList();
+
+}
+
+
+<!--Article-->
+<table class="table table-hover">
+    <caption>List of Articles by you!</caption>
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Author</th>
+            <th scope="col">Category</th>
+            <th scope="col">Status</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (articles == null)
+        {
+            <tr>
+                <td colspan="2">No articles added by you yet</td>
+            </tr>
+        }
+
+        else
+        {
+            @foreach (var article in articles)
+            {
+
+                <tr>
+                    <td scope="row">@article.Id</td>
+                    <td>@article.Name</td>
+                    <td>@user.UserName</td>
+                    <td>@article.Category.Name</td>
+                    <td>@article.Status</td>
+                                   <td><a class="btn btn-info" href="#">Edit</a></td>
+                    <td><a class="btn btn-danger" href="#">Delete</a></td>
+                </tr>
+            }
+        }
+
+
+    </tbody>
+</table>
+
+
+<table class="table table-hover">
+    <caption>List of Recipes by you!</caption>
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Author</th>
+            <th scope="col">Status</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (recipes == null)
+        {
+            <tr>
+                <td>No recipes added by you yet</td>
+            </tr>
+        }
+
+        else
+        {
+            @foreach (var recipe in recipes)
+            {
+
+                <tr>
+                    <td scope="row">@recipe.Id</td>
+                    <td>@recipe.Name</td>
+                    <td>@user.UserName</td>
+                    <td>@recipe.Status</td>
+                    <td><a class="btn btn-info" href="#">Edit</a></td>
+                    <td><a class="btn btn-danger" href="#">Delete</a></td>
+                </tr>
+            }
+        }
+
+
+    </tbody>
+</table>
+
+
+
+<!--Events-->
+<table class="table table-hover">
+    <caption>List of Events Added by you!</caption>
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Author</th>
+            <th scope="col">Start Date</th>
+            <th scope="col">End Date</th>
+            <th scope="col">Duration</th>
+            <th scope="col">Status</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (events == null)
+        {
+            <tr>
+                <td>No events added by you yet</td>
+            </tr>
+        }
+
+        else
+        {
+            @foreach (var eventt in events)
+            {
+
+                <tr>
+                    <td scope="row">@eventt.Id</td>
+                    <td>@eventt.Name</td>
+                    <td>@user.UserName</td>
+                    <td>@eventt.StartDate.ToShortDateString()</td>
+                    <td>@eventt.EndDate.ToShortDateString()</td>
+                    <td>@eventt.Duration(eventt.StartDate, eventt.EndDate)</td>
+                    <td>@eventt.Status</td>
+                    <td><a class="btn btn-info" href="#">Edit</a></td>
+                    <td><a class="btn btn-danger" href="#">Delete</a></td>
+                </tr>
+            }
+        }
+
+
+    </tbody>
+</table>
+
+
+
+<a class="btn btn-primary" asp-page="AddContent">Add Content!!!</a>
