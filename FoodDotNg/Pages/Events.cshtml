@@ -1,0 +1,123 @@
+﻿@page 
+@model FoodDotNg.Pages.EventsModel
+@inject UserManager<ApplicationUser> userManager
+@{
+    ViewData["Title"] = "Events";
+}
+
+<style>
+    .notAvail {
+        padding-left: 15px;
+    }
+
+    .section_padding_40 {
+        padding-top: 40px;
+        padding-bottom: 40px;
+    }
+</style>
+
+<!-- ****** Breadcumb Area Start ****** -->
+<div class="breadcumb-area" style="background-image: url(https://res.cloudinary.com/food-ng/image/upload/v1592392468/Recipe.jpg);">
+    <div class="container h-100">
+        <div class="row h-100 align-items-center">
+            <div class="col-12">
+                <div class="bradcumb-title text-center">
+                    <h2>All Events</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="breadcumb-nav">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/Index"><i class="fa fa-home" aria-hidden="true"></i> Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Food Events</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ****** Breadcumb Area End ****** -->
+<!-- ****** Archive Area Start ****** -->
+<section class="archive-area section_padding_40">
+    <div class="container">
+        <div class="row">
+            @if (Model.EventPost == null || Model.EventPost.Count <= 0)
+            {
+                <h4 class="notAvail">No posts in this section yet!</h4>
+                <hr />
+            }
+
+            else
+            {
+                @foreach (var post in Model.EventPost)
+                {
+                    <!-- Single Post -->
+                    <div class="col-12">
+                        <div class="list-blog single-post d-sm-flex wow fadeInUpBig" data-wow-delay=".4s">
+                            <!-- Post Thumb -->
+                            <div class="post-thumb">
+                                <img src="@post.ImageUrl" alt="">
+                            </div>
+                            <!-- Post Content -->
+                            <div class="post-content">
+                                <div class="post-meta d-flex">
+                                    <div class="post-author-date-area d-flex">
+                                        <!-- Post Author -->
+                                        <div class="post-author">
+                                            @{ var user = await userManager.FindByIdAsync(post.AuthorId);
+                                            }
+                                            <a href="#">@user.UserName</a>
+                                        </div>
+                                        <div class="post-author">
+                                            <a href="/Events">Events</a>
+                                        </div>
+                                        <!-- Post Date -->
+                                        <div class="post-date">
+                                            <a href="#">@post.DateCreated.ToLongDateString()</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a href="#">
+                                    <h2 class="post-headline">@post.Name</h2>
+                                </a>
+                                <p>@post.StartDate.ToLongDateString() - @post.EndDate.ToLongDateString()</p>
+                                <p>@post.EventPost.Substring(0, 320) ...</p>
+                                <a href="#" class="read-more">Continue Reading..</a>
+                            </div>
+                        </div>
+                    </div>
+
+                }
+
+                <div class="col-12">
+                    <div class="pagination-area d-sm-flex mt-15">
+                        <nav aria-label="#">
+                            <ul class="pagination">
+                                <li class="page-item active">
+                                    <a class="page-link" href="#">1 <span class="sr-only">(current)</span></a>
+                                </li>
+                                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                <li class="page-item">
+                                    <a class="page-link" href="#">Next <i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
+                                </li>
+                            </ul>
+                        </nav>
+                        <div class="page-status">
+                            <p>Page 1 of 60 results</p>
+                        </div>
+                    </div>
+                </div>
+
+            }
+
+        </div>
+    </div>
+</section>
+<!-- ****** Archive Area End ****** -->

@@ -1,13 +1,18 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using FoodDotNg.Data;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
+using CloudinaryDotNet;
+using CloudinaryDotNet.Actions;
+using Microsoft.AspNetCore.Hosting;
 
 namespace FoodDotNg.Areas.Identity.Pages.Account
 {
@@ -15,21 +20,56 @@ namespace FoodDotNg.Areas.Identity.Pages.Account
     public class AddContentModel : PageModel
     {
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IWebHostEnvironment _hostEnvironment;
         private readonly FoodDotNgDbContext _context;
 
         [BindProperty]
         public ContentModel ContentModel { get; set; }
-        public AddContentModel(UserManager<ApplicationUser> userManager, FoodDotNgDbContext context)
+        public AddContentModel(UserManager<ApplicationUser> userManager, FoodDotNgDbContext context, IWebHostEnvironment hostEnvironment)
         {
             _userManager = userManager;
             _context = context;
+            _hostEnvironment = hostEnvironment;
         }
         public void OnGet()
         {
         }
 
+        public string UploadImage()
+        {
+            var myAccount = new CloudinaryDotNet.Account { ApiKey = "917462976781737", ApiSecret = "N6Jod9FI_27eYX7pZNLfcs7Qg-c", Cloud = "food-ng" };
+            Cloudinary _cloudinary = new Cloudinary(myAccount);
+
+            string wwwRootPath = _hostEnvironment.WebRootPath;
+            string fileName = Path.GetFileNameWithoutExtension(ContentModel.ImageFile.FileName);
+            string extension = Path.GetExtension(ContentModel.ImageFile.FileName);
+            fileName = fileName + DateTime.UtcNow.ToString("yymmssfff") + extension;
+            string path = Path.Combine(wwwRootPath + "/images/", fileName);
+
+            using(var filestream = new FileStream(path, FileMode.Create))
+            {
+                 ContentModel.ImageFile.CopyToAsync(filestream);
+            }
+
+            var uploadParameters = new ImageUploadParams()
+            {
+                File = new FileDescription(path)
+            };
+
+            var uploadResult = _cloudinary.Upload(uploadParameters);
+
+            var imageUrl = uploadResult.SecureUrl.AbsoluteUri;
+
+            if (System.IO.File.Exists(path)) System.IO.File.Delete(path);
+
+            return imageUrl;
+
+        }
+
         public async Task<IActionResult> OnPostAddContent(string type)
         {
+            var imageUrl = UploadImage();
+
             if (string.IsNullOrWhiteSpace(type))
             {
                 return NotFound();
@@ -47,15 +87,17 @@ namespace FoodDotNg.Areas.Identity.Pages.Account
                     AuthorId = ContentModel.authorId,
                     DateCreated = DateTime.UtcNow,
                     DateModified = DateTime.UtcNow,
+                    ImageUrl = imageUrl
                 };
 
                await _context.Events.AddAsync(even_t);
                await _context.SaveChangesAsync();
-               return Page();
+               return RedirectToPage("ManageMyContent");
             }
 
             if (type == "Article")
             {
+                
                 var category = _context.ArticleCategories.Find(ContentModel.articleCategoryId);
 
                 if(category == null)
@@ -67,16 +109,18 @@ namespace FoodDotNg.Areas.Identity.Pages.Account
 
                     Name = ContentModel.BlogPostName,
                     ArticlePost = ContentModel.BlogPost,
+                    CategoryId = ContentModel.articleCategoryId,
                     Category = category,
                     Status = "Pending",
                     AuthorId = ContentModel.authorId,
                     DateCreated = DateTime.UtcNow,
                     DateModified = DateTime.UtcNow,
+                    ImageUrl = imageUrl
                 };
 
                 await _context.Articles.AddAsync(article);
                 await _context.SaveChangesAsync();
-                return Page();
+                return RedirectToPage("ManageMyContent");
             }
 
             if (type == "Recipe")
@@ -91,11 +135,12 @@ namespace FoodDotNg.Areas.Identity.Pages.Account
                     AuthorId = ContentModel.authorId,
                     DateCreated = DateTime.UtcNow,
                     DateModified = DateTime.UtcNow,
+                    ImageUrl = imageUrl
                 };
 
                 await _context.Recipes.AddAsync(recipe);
                 await _context.SaveChangesAsync();
-                return Page();
+                return RedirectToPage("ManageMyContent");
             }
 
             return Page();
@@ -113,5 +158,6 @@ namespace FoodDotNg.Areas.Identity.Pages.Account
         public string RecipeIngredients { get; set; }
         public string RecipeSteps { get; set; }
         public string BlogPost { get; set; }
+        public IFormFile ImageFile { get; set; }
     }
 }

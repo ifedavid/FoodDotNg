@@ -3,7 +3,6 @@
 @inject FoodDotNgDbContext _context;
 @{
     ViewData["Title"] = Model.PageName;
-    List<string> pageNames = new List<string> { "Food Life", "Latest News", "Cooking", "Interviews"};
 }
 
 <style>
@@ -48,8 +47,6 @@
 <section class="archive-area section_padding_40">
     <div class="container">
         <div class="row">
-            @if (pageNames.Contains(Model.PageName))
-            {
                 @if (Model.BlogPosts == null || Model.BlogPosts.Count <= 0)
                 {
                     <h4 class="notAvail">No posts in this section yet!</h4>
@@ -65,7 +62,7 @@
                             <div class="single-post wow fadeInUp" data-wow-delay="0.1s">
                                 <!-- Post Thumb -->
                                 <div class="post-thumb">
-                                    <img src="img/blog-img/2.jpg" alt="">
+                                    <img src="@post.ImageUrl" alt="">
                                 </div>
                                 <!-- Post Content -->
                                 <div class="post-content">
@@ -88,7 +85,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <a href="/BlogPost/?postId=@post.Id">
+                                    <a href="/BlogPost/@post.Id">
                                         <h4 class="post-headline">@post.Name</h4>
                                     </a>
                                 </div>
@@ -118,153 +115,6 @@
                     </div>
 
                 }
-            }
-
-            @if (Model.PageName == "Recipes")
-            {
-                @if (Model.RecipesPosts == null || Model.RecipesPosts.Count <= 0)
-                {
-                    <h4 class="notAvail">No posts in this section yet!</h4>
-                    <hr />
-                }
-
-                else
-                {
-                    @foreach (var post in Model.RecipesPosts)
-                    {
-                        <!-- Single Post -->
-                        <div class="col-12 col-md-6 col-lg-4">
-                            <div class="single-post wow fadeInUp" data-wow-delay="0.1s">
-                                <!-- Post Thumb -->
-                                <div class="post-thumb">
-                                    <img src="img/blog-img/2.jpg" alt="">
-                                </div>
-                                <!-- Post Content -->
-                                <div class="post-content">
-                                    <div class="post-meta d-flex">
-                                        <div class="post-author-date-area d-flex">
-                                            <!-- Post Author -->
-                                            <div class="post-author">
-                                                @{
-                                                    var user = await _context.Users.FindAsync(post.AuthorId);
-
-                                                }
-                                                <a href="#">@user.UserName</a>
-                                            </div>
-                                            <div class="post-author">
-                                                <a href="#">Recipe</a>
-                                            </div>
-                                            <!-- Post Date -->
-                                            <div class="post-date">
-                                                <a href="#">@post.DateCreated.ToLongDateString()</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <a href="/BlogPost/?postId=@post.Id">
-                                        <h4 class="post-headline">@post.Name</h4>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-
-                    }
-
-                    <div class="col-12">
-                        <div class="pagination-area d-sm-flex mt-15">
-                            <nav aria-label="#">
-                                <ul class="pagination">
-                                    <li class="page-item active">
-                                        <a class="page-link" href="#">1 <span class="sr-only">(current)</span></a>
-                                    </li>
-                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#">Next <i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
-                                    </li>
-                                </ul>
-                            </nav>
-                            <div class="page-status">
-                                <p>Page 1 of 60 results</p>
-                            </div>
-                        </div>
-                    </div>
-
-                }
-            }
-
-            @if (Model.PageName == "Events")
-            {
-                @if (Model.EventPosts == null || Model.EventPosts.Count <= 0)
-                {
-                    <h4 class="notAvail">No posts in this section yet!</h4
-                    <hr />
-                }
-
-                else
-                {
-                    @foreach (var post in Model.EventPosts)
-                    {
-                        <!-- Single Post -->
-                        <div class="col-12 col-md-6 col-lg-4">
-                            <div class="single-post wow fadeInUp" data-wow-delay="0.1s">
-                                <!-- Post Thumb -->
-                                <div class="post-thumb">
-                                    <img src="img/blog-img/2.jpg" alt="">
-                                </div>
-                                <!-- Post Content -->
-                                <div class="post-content">
-                                    <div class="post-meta d-flex">
-                                        <div class="post-author-date-area d-flex">
-                                            <!-- Post Author -->
-                                            <div class="post-author">
-                                                @{
-                                                    var user = await _context.Users.FindAsync( post.AuthorId);
-
-                                                }
-                                                <a href="#">@user.UserName</a>
-                                            </div>
-                                            <div class="post-author">
-                                                <a href="#">Event</a>
-                                            </div>
-                                            <!-- Post Date -->
-                                            <div class="post-date">
-                                                <a href="#">@post.DateCreated.ToLongDateString()</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <a href="/BlogPost/?postId=@post.Id">
-                                        <h4 class="post-headline">@post.Name</h4>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-
-
-                    }
-
-                    <div class="col-12">
-                        <div class="pagination-area d-sm-flex mt-15">
-                            <nav aria-label="#">
-                                <ul class="pagination">
-                                    <li class="page-item active">
-                                        <a class="page-link" href="#">1 <span class="sr-only">(current)</span></a>
-                                    </li>
-                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#">Next <i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
-                                    </li>
-                                </ul>
-                            </nav>
-                            <div class="page-status">
-                                <p>Page 1 of 60 results</p>
-                            </div>
-                        </div>
-                    </div>
-
-                }
-            }
-
 
         </div>
     </div>

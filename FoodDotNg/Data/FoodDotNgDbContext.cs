@@ -70,7 +70,7 @@ namespace FoodDotNg.Data
                     DateModified = DateTime.UtcNow,
                     Id = Guid.NewGuid(),
                     IsActive = true,
-                    Name = "Health tips"
+                    Name = "Health and tips"
                 }
             );
         }

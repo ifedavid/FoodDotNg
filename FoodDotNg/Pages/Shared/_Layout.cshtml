@@ -1,6 +1,10 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
+    @{
+        @inject FoodDotNgDbContext _context;
+   
+    }
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - FoodDotNg</title>
@@ -63,7 +67,8 @@
                 <!-- Logo Area Start -->
                 <div class="col-12">
                     <div class="logo_area text-center">
-                        <a href="/Index" class="yummy-logo">FoodDotNg</a>
+                        <a href="/Index" class="yummy-logo">FoodDotNg@*<sub style="font-size:18px"> for food only...</sub>*@</a>
+                        <p class="yummy-logo" style="font-size:18px;">for food only...</p>
                     </div>
                 </div>
             </div>
@@ -79,19 +84,22 @@
                                     <a class="nav-link" href="/Index">Home</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="/ContentList?pageName=Recipes">Recipes</a>
+                                    <a class="nav-link" href="/Recipes">Recipes</a>
                                 </li>
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="#" id="yummyDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Categories</a>
                                     <div class="dropdown-menu" aria-labelledby="yummyDropdown">
-                                        <a class="dropdown-item" href="/ContentList?pageName=Interviews">Interviews</a>
-                                        <a class="dropdown-item" href="/ContentList?pageName=Latest News">Latest News</a>
-                                        <a class="dropdown-item" href="/ContentList?pageName=Cooking">Cooking</a>
-                                        <a class="dropdown-item" href="/ContentList?pageName=Food Life">Food Life</a>
+                                    @{ 
+                                        var categories = _context.ArticleCategories.ToList();
+                                        @foreach (var category in categories)
+                                        {
+                                            <a class="dropdown-item" href="/ContentList/?pageName=@category.Name">@category.Name</a>
+                                        }
+                                    }
                                     </div>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="/ContentList?pageName=Events">Events</a>
+                                    <a class="nav-link" href="/Events">Events</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="/Contact">Contact</a>

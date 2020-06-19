@@ -29,55 +29,12 @@ namespace FoodDotNg.Pages
             var allArticles = _context.Articles.ToList();
             var allCategories = _context.ArticleCategories.ToList();
 
-            if(pageName == "Interviews")
+           foreach(var category in allCategories)
             {
-                var category = allCategories.Where(ac => ac.Name == pageName);
-                if(category == null)
+                if (pageName == category.Name)
                 {
-                    return NotFound();
+                    BlogPosts = allArticles.Where(a => a.CategoryId == category.Id && a.Status == "Approved").ToList();
                 }
-                BlogPosts = allArticles.Where(a => a.Status == "Approved" && a.Category == category).OrderBy(ad => ad.DateCreated).ToList();
-            }
-            
-            if(pageName == "Food Life")
-            {
-                var category = allCategories.Where(ac => ac.Name == pageName);
-                if (category == null)
-                {
-                    return NotFound();
-                }
-                BlogPosts = allArticles.Where(a => a.Status == "Approved" && a.Category == category).OrderBy(ad => ad.DateCreated).ToList();
-            }
-
-            if (pageName == "Latest News")
-            {
-                var category = allCategories.Where(ac => ac.Name == pageName);
-                if (category == null)
-                {
-                    return NotFound();
-                }
-                BlogPosts = allArticles.Where(a => a.Status == "Approved" && a.Category == category).OrderBy(ad => ad.DateCreated).ToList();
-            }
-
-            if (pageName == "Cooking")
-            {
-                var category = allCategories.Where(ac => ac.Name == pageName);
-                if (category == null)
-                {
-                    return NotFound();
-                }
-                BlogPosts = allArticles.Where(a => a.Status == "Approved" && a.Category == category).OrderBy(ad => ad.DateCreated).ToList();
-            }
-
-
-            if (pageName == "Recipes")
-            {
-                RecipesPosts = _context.Recipes.Where(a => a.Status == "Approved").OrderBy(ad => ad.DateCreated).ToList();
-            }
-
-            if (pageName == "Events")
-            {
-                EventPosts = _context.Events.Where(a => a.Status == "Approved").OrderBy(ad => ad.DateCreated).ToList();
             }
 
             return Page();
