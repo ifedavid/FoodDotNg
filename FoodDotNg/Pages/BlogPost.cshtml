@@ -4,8 +4,18 @@
 @inject UserManager<ApplicationUser> userManager
 @{
     ViewData["Title"] = "BlogPost";
+    
 
 }
+
+<style>
+    .postImage{
+        height:450px;
+        width:fit-content;
+        object-fit:cover;
+        width:max-content;
+    }
+</style>
 
 <!-- ****** Breadcumb Area Start ****** -->
 <div class="breadcumb-area" style="background-image: url(img/bg-img/breadcumb.jpg);">
@@ -29,7 +39,7 @@
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="#"><i class="fa fa-home" aria-hidden="true"></i> Home</a></li>
-                        <li class="breadcrumb-item"><a href="#">Articles</a></li>
+                        <li class="breadcrumb-item"><a href="/ContentList/?pageName=@category.Name">@category.Name</a></li>
                         <li class="breadcrumb-item active" aria-current="page">@Model.BlogPost.Name</li>
                     </ol>
                 </nav>
@@ -50,7 +60,7 @@
                         <div class="single-post">
                             <!-- Post Thumb -->
                             <div class="post-thumb">
-                                <img src="@Model.BlogPost.ImageUrl" alt="">
+                                <img class="postImage" src="@Model.BlogPost.ImageUrl" alt="">
                             </div>
                             <!-- Post Content -->
                             <div class="post-content">
@@ -61,7 +71,7 @@
                                             @{
                                                 var user = await _context.Users.FindAsync(Model.BlogPost.AuthorId);
                                             }
-                                            <a href="#">@user.UserName</a>
+                                            <a href="#">by @user.UserName</a>
                                         </div>
                                         <div class="post-author">
                                             <a href="#">@Model.BlogPost.Category.Name</a>
@@ -75,37 +85,9 @@
                                 <a href="#">
                                     <h2 class="post-headline">@Model.BlogPost.Name</h2>
                                 </a>
-                                <p>Tiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea. Liusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, qui s nostrud exercitation ullamLorem ipsum dolor sit amet, consectetur adipisicing elit.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliquaLorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
-
-                                <blockquote class="yummy-blockquote mt-30 mb-30">
-                                    <h5 class="mb-30">“Technology is nothing. What's important is that you have a faith in people, that they're basically good and smart, and if you give them tools, they'll do wonderful things with them.”</h5>
-                                    <h6 class="text-muted">Steven Jobs</h6>
-                                </blockquote>
-
-                                <h4>You Can Buy For Less Than A College Degree</h4>
-                                <p>Dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. </p>
-
-                                <img class="br-30 mb-30" src="~/img/blog-img/11.jpg" alt="">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliquaLorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
-
-                                <img class="br-30 mb-30" src="~/img/blog-img/12.jpg" alt="">
-                                <p>Liusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, qui s nostrud exercitation ullamLorem ipsum dolor sit amet, consectetur adipisicing elit.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliquaLorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-
-                                <img class="br-30 mb-30" src="~/img/blog-img/13.jpg" alt="">
-                                <h4>You Can Buy For Less Than A College Degree</h4>
-                                <p>Liusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, qui s nostrud exercitation ullamLorem ipsum dolor sit amet, consectetur adipisicing elit.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliquaLorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-
-                                <ul class="mb-30">
-                                    <li>1/3 cup Lonsectetur adipisicing elit.Lorem ipsum</li>
-                                    <li>1/2 cup Veniam, quis nostrud exercitation</li>
-                                    <li>Ut labore et dolore magna</li>
-                                    <li>Lonsectetur adipisicing elit.Lorem ipsum</li>
-                                    <li>Lonsectetur adipisicing elit.Lorem ipsum</li>
-                                    <li>Ut labore et dolore magna</li>
-                                    <li>Lonsectetur adipisicing elit.Lorem ipsum</li>
-                                </ul>
-
-                                <img class="br-30 mb-15" src="~/img/blog-img/14.jpg" alt="">
+                                <div id="blogpost">
+                                    @Html.Raw(Model.BlogPost.ArticlePost)
+                                </div>
 
                             </div>
                         </div>
@@ -200,3 +182,20 @@
         </div>
     </div>
 </section>
+
+@section Scripts{ 
+
+<script>
+
+</script>
+
+<script>
+    $(document).ready(function () {
+        var $log = $("#blogpost");
+        //var html = $.parseHTML(str);
+        //$log.append(html);
+    });
+
+
+</script>
+}

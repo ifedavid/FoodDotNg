@@ -23,8 +23,6 @@ namespace FoodDotNg.Areas.Identity.Pages.Account
         private readonly IWebHostEnvironment _hostEnvironment;
         private readonly FoodDotNgDbContext _context;
 
-        [BindProperty]
-        public ContentModel ContentModel { get; set; }
         public AddContentModel(UserManager<ApplicationUser> userManager, FoodDotNgDbContext context, IWebHostEnvironment hostEnvironment)
         {
             _userManager = userManager;
@@ -35,7 +33,7 @@ namespace FoodDotNg.Areas.Identity.Pages.Account
         {
         }
 
-        public string UploadImage()
+        public async Task<string> UploadImage(ContentModel ContentModel)
         {
             var myAccount = new CloudinaryDotNet.Account { ApiKey = "917462976781737", ApiSecret = "N6Jod9FI_27eYX7pZNLfcs7Qg-c", Cloud = "food-ng" };
             Cloudinary _cloudinary = new Cloudinary(myAccount);
@@ -48,7 +46,7 @@ namespace FoodDotNg.Areas.Identity.Pages.Account
 
             using(var filestream = new FileStream(path, FileMode.Create))
             {
-                 ContentModel.ImageFile.CopyToAsync(filestream);
+                await ContentModel.ImageFile.CopyToAsync(filestream);
             }
 
             var uploadParameters = new ImageUploadParams()
@@ -56,7 +54,7 @@ namespace FoodDotNg.Areas.Identity.Pages.Account
                 File = new FileDescription(path)
             };
 
-            var uploadResult = _cloudinary.Upload(uploadParameters);
+            var uploadResult = await _cloudinary.UploadAsync(uploadParameters);
 
             var imageUrl = uploadResult.SecureUrl.AbsoluteUri;
 
@@ -66,9 +64,10 @@ namespace FoodDotNg.Areas.Identity.Pages.Account
 
         }
 
-        public async Task<IActionResult> OnPostAddContent(string type)
+        public async Task<IActionResult> OnPostAddContent(string type, ContentModel ContentModel)
         {
-            var imageUrl = UploadImage();
+            var imageUrl = UploadImage(ContentModel);
+            string imageUrll = imageUrl.Result;
 
             if (string.IsNullOrWhiteSpace(type))
             {
@@ -87,7 +86,7 @@ namespace FoodDotNg.Areas.Identity.Pages.Account
                     AuthorId = ContentModel.authorId,
                     DateCreated = DateTime.UtcNow,
                     DateModified = DateTime.UtcNow,
-                    ImageUrl = imageUrl
+                    ImageUrl = imageUrll
                 };
 
                await _context.Events.AddAsync(even_t);
@@ -115,7 +114,7 @@ namespace FoodDotNg.Areas.Identity.Pages.Account
                     AuthorId = ContentModel.authorId,
                     DateCreated = DateTime.UtcNow,
                     DateModified = DateTime.UtcNow,
-                    ImageUrl = imageUrl
+                    ImageUrl = imageUrll
                 };
 
                 await _context.Articles.AddAsync(article);
@@ -131,11 +130,11 @@ namespace FoodDotNg.Areas.Identity.Pages.Account
                     RecipePost = ContentModel.BlogPost,
                     Steps = ContentModel.RecipeSteps,
                     Ingredients = ContentModel.RecipeIngredients,
-                    Status = "Approved",
+                    Status = "Pending",
                     AuthorId = ContentModel.authorId,
                     DateCreated = DateTime.UtcNow,
                     DateModified = DateTime.UtcNow,
-                    ImageUrl = imageUrl
+                    ImageUrl = imageUrll
                 };
 
                 await _context.Recipes.AddAsync(recipe);

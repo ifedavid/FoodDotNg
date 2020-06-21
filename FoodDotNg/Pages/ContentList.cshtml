@@ -62,7 +62,7 @@
                             <div class="single-post wow fadeInUp" data-wow-delay="0.1s">
                                 <!-- Post Thumb -->
                                 <div class="post-thumb">
-                                    <img src="@post.ImageUrl" alt="">
+                                    <img class="img-thumbnail" style="max-width:100%; height:300px; object-fit:cover; width:fit-content; width:max-content;" src="@post.ImageUrl" alt="">
                                 </div>
                                 <!-- Post Content -->
                                 <div class="post-content">
@@ -74,14 +74,18 @@
                                                     var user = await _context.Users.FindAsync(post.AuthorId);
 
                                                 }
-                                                <a href="#">@user</a>
+                                                <a href="#">by @user</a>
                                             </div>
                                             <div class="post-author">
                                                 <a href="#">@post.Category.Name</a>
                                             </div>
                                             <!-- Post Date -->
                                             <div class="post-date">
-                                                <a href="#">@post.DateCreated.ToLongDateString()</a>
+                                                @{
+                                                    List<string> dateList = post.DateCreated.ToLongDateString().Split(",").ToList();
+
+                                                }
+                                                <a href="#">@dateList[1], @dateList[2]</a>
                                             </div>
                                         </div>
                                     </div>

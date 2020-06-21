@@ -1,9 +1,10 @@
 ﻿@page
 @model FoodDotNg.Pages.RecipesModel
 @inject UserManager<ApplicationUser> userManager
+@inject FoodDotNgDbContext _context
 @{
     ViewData["Title"] = "Recipes";
-    
+
 }
 
 <style>
@@ -59,11 +60,11 @@
                 @foreach (var post in Model.Recipes)
                 {
                     <!-- Single Post -->
-                    <div class="col-12">
-                        <div class="list-blog single-post d-sm-flex wow fadeInUpBig" data-wow-delay=".4s">
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <div class="single-post wow fadeInUp" data-wow-delay="0.1s">
                             <!-- Post Thumb -->
                             <div class="post-thumb">
-                                <img style="height:20%" src="@post.ImageUrl" alt="">
+                                <img class="img-thumbnail" style="max-width:100%; height:300px; object-fit:cover; width:fit-content; width:max-content;" src="@post.ImageUrl" alt="">
                             </div>
                             <!-- Post Content -->
                             <div class="post-content">
@@ -71,25 +72,28 @@
                                     <div class="post-author-date-area d-flex">
                                         <!-- Post Author -->
                                         <div class="post-author">
-                                            @{ var user = await userManager.FindByIdAsync(post.AuthorId);
+                                            @{
+                                                var user = await _context.Users.FindAsync(post.AuthorId);
+
                                             }
-                                            <a href="#">@user.UserName</a>
+                                            <a href="#">by @user</a>
                                         </div>
                                         <div class="post-author">
-                                            <a href="/Events">Events</a>
+                                            <a href="#">Recipes</a>
                                         </div>
                                         <!-- Post Date -->
                                         <div class="post-date">
-                                            <a href="#">@post.DateCreated.ToLongDateString()</a>
+                                            @{
+                                                List<string> dateList = post.DateCreated.ToLongDateString().Split(",").ToList();
+
+                                            }
+                                            <a href="#">@dateList[1], @dateList[2]</a>
                                         </div>
                                     </div>
                                 </div>
-                                <a href="#">
-                                    <h2 class="post-headline">@post.Name</h2>
+                                <a href="/BlogPost/@post.Id">
+                                    <h4 class="post-headline">@post.Name</h4>
                                 </a>
-                                <p>@post.Ingredients ...</p>
-                                <p>@post.Steps</p>
-                                <a href="#" class="read-more">Continue Reading..</a>
                             </div>
                         </div>
                     </div>

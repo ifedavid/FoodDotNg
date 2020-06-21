@@ -61,8 +61,8 @@
                     <div class="col-12">
                         <div class="list-blog single-post d-sm-flex wow fadeInUpBig" data-wow-delay=".4s">
                             <!-- Post Thumb -->
-                            <div class="post-thumb">
-                                <img src="@post.ImageUrl" alt="">
+                            <div style="max-height:400px;" class="post-thumb">
+                                <img height="370px" width="600px" style="object-fit:cover;" src="@post.ImageUrl" alt="">
                             </div>
                             <!-- Post Content -->
                             <div class="post-content">
@@ -72,14 +72,17 @@
                                         <div class="post-author">
                                             @{ var user = await userManager.FindByIdAsync(post.AuthorId);
                                             }
-                                            <a href="#">@user.UserName</a>
+                                            <a href="#">by @user.UserName</a>
                                         </div>
                                         <div class="post-author">
                                             <a href="/Events">Events</a>
                                         </div>
                                         <!-- Post Date -->
                                         <div class="post-date">
-                                            <a href="#">@post.DateCreated.ToLongDateString()</a>
+                                            @{ 
+                                                List<string> dateList = post.DateCreated.ToLongDateString().Split(",").ToList();
+                                            }
+                                            <a href="#">@dateList[1], @dateList[2]</a>
                                         </div>
                                     </div>
                                 </div>
