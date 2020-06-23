@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
@@ -23,5 +25,6 @@ namespace FoodDotNg.Data
 
         [AllowNull]
         public string ImageUrl { get; set; }
+        public string ImageSource { get; set; }
     }
 }

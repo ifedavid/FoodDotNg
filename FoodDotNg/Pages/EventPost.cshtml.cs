@@ -8,28 +8,28 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace FoodDotNg.Pages
 {
- 
-    public class BlogPostModel : PageModel
+    public class EventPostModel : PageModel
     {
         private readonly FoodDotNgDbContext _context;
 
         [BindProperty]
         public Guid PostId { get; set; }
-        public Articles BlogPost { get; set; }
-        public List<Articles> AllArticles { get; set; }
-        public BlogPostModel(FoodDotNgDbContext context)
+        public Events BlogPost { get; set; }
+        public List<Events> Events { get; set; }
+        public EventPostModel(FoodDotNgDbContext context)
         {
             _context = context;
         }
         public async Task<IActionResult> OnGet(Guid postId)
         {
-            AllArticles = _context.Articles.ToList();
-            BlogPost =  await _context.Articles.FindAsync(postId);
-            if(BlogPost == null)
+            Events = _context.Events.ToList();
+            BlogPost = await _context.Events.FindAsync(postId);
+            if (BlogPost == null)
             {
                 return NotFound();
             }
-            AllArticles.Remove(BlogPost);
+            Events.Remove(BlogPost);
+
             return Page();
 
         }

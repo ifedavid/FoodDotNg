@@ -452,7 +452,7 @@ li {
 }
 
 .navbar.navbar-expand-lg .navbar-nav .nav-link {
-    padding: 25px 30px;
+    padding: 25px 20px;
     color: #232d37;
     text-transform: uppercase;
     font-size: 14px;
@@ -504,8 +504,8 @@ li {
     padding: 30px;
     width: 100%;
     height: auto;
-    -webkit-transition-duration: 750ms;
-    transition-duration: 750ms;
+    -webkit-transition-duration: 50ms;
+    transition-duration: 500ms;
 }
 
 .welcome-single-slide:hover .project_title {
@@ -554,7 +554,7 @@ li {
     height: 100%;
     top: 0;
     left: 0;
-    cursor: url(img/core-img/back.png), auto !important;
+    cursor: url(~/img/core-img/back.png), auto !important;
     z-index: 9;
 }
 
@@ -597,8 +597,8 @@ li {
     left: 50%;
     -webkit-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
-    -webkit-transition-duration: 500ms;
-    transition-duration: 500ms;
+    -webkit-transition-duration: 100ms;
+    transition-duration: 100ms;
 }
 
 .single_catagory:hover .catagory-title {
@@ -608,8 +608,8 @@ li {
 .catagory-title a > h5 {
     margin-bottom: 0;
     line-height: 50px;
-    -webkit-transition-duration: 500ms;
-    transition-duration: 500ms;
+    -webkit-transition-duration: 100ms;
+    transition-duration: 100ms;
 }
 
 .single_catagory:hover .catagory-title a > h5 {
@@ -682,8 +682,8 @@ li {
 .single-post h4 {
     margin: 10px 0;
     color: #232d37;
-    -webkit-transition-duration: 500ms;
-    transition-duration: 500ms;
+    -webkit-transition-duration: 300ms;
+    transition-duration: 300ms;
     text-transform: capitalize;
 }
 

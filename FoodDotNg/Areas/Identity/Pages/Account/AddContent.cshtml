@@ -22,13 +22,22 @@
 
     <!--Add Article-->
     <div class="ArticlePost">
-        <form method="post" asp-page-handler="AddContent" asp-route-type="Article" style="padding-top:2em;">
+        <form method="post" enctype="multipart/form-data" asp-page-handler="AddContent" asp-route-type="Article" style="padding-top:2em;">
             <h4>Add an Article</h4>
             <hr />
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group">
                 <label>Article Name</label>
-                <input asp-for="ContentModel.BlogPostName" class="form-control" placeholder="Article Name" />
+                <input required name="BlogPostName" class="form-control" placeholder="Article Name" />
+            </div>
+
+            <div class="form-group">
+                <label>Article Main Image</label>
+                <input required type="file" name="ImageFile" accept="image/*" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label>Image Source</label>
+                <input required name="ImageSource" class="form-control" placeholder="Image Source" />
             </div>
 
             <div class="form-group">
@@ -37,81 +46,98 @@
                     var categories = _context.ArticleCategories.ToList();
                     var categoriess = categories.Select(ca => new SelectListItem { Text = ca.Name, Value = ca.Id.ToString() });
                 }
-                <select asp-for="ContentModel.articleCategoryId" asp-items="categoriess" class="form-control">
+                <select required name="articleCategoryId" asp-items="categoriess" class="form-control">
                 </select>
             </div>
             <div class="form-group">
                 <label>Article Post</label>
-                <textarea asp-for="ContentModel.BlogPost" style="height:200px;" placeholder="<p></p>" class="form-control"></textarea>
+                <textarea required name="BlogPost" style="height:200px;" placeholder="<p></p>" class="form-control"></textarea>
             </div>
 
-            <input asp-for="ContentModel.authorId" hidden value="@user.Id" />
+            <input name="authorId" hidden value="@user.Id" />
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
     </div>
 
     <!--Add Event-->
     <div class="EventPost">
-        <form method="post" asp-page-handler="AddContent" asp-route-type="Event" style="padding-top:2em;">
+        <form method="post" enctype="multipart/form-data" asp-page-handler="AddContent" asp-route-type="Event" style="padding-top:2em;">
             <h4>Add an Event</h4>
             <hr />
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group">
                 <label>Event Name</label>
-                <input asp-for="ContentModel.BlogPostName" class="form-control" placeholder="Event Name" />
+                <input required name="BlogPostName" class="form-control" placeholder="Event Name" />
+            </div>
+            <div class="form-group">
+                <label>Event Main Image</label>
+                <input required type="file" name="ImageFile" accept="image/*" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label>Image Source</label>
+                <input required name="ImageSource" class="form-control" placeholder="Image Source" />
             </div>
 
             <div class="form-group">
                 <label>Event Organizer</label>
-                <input asp-for="ContentModel.eventOrganizer" class="form-control" placeholder="Event Organizer" />
+                <input required name="eventOrganizer" class="form-control" placeholder="Event Organizer" />
             </div>
 
             <div class="form-group">
                 <label>Event start Date</label>
-                <input asp-for="ContentModel.EventStart" type="date" class="form-control" />
+                <input required name="EventStart" type="date" class="form-control" />
             </div>
 
 
             <div class="form-group">
                 <label>Event end Date</label>
-                <input type="date" asp-for="ContentModel.EventEnd" class="form-control" />
+                <input required type="date" name="EventEnd" class="form-control" />
             </div>
 
             <div class="form-group">
                 <label>Event Details</label>
-                <textarea asp-for="ContentModel.BlogPost" style="height:100px;" placeholder="" class="form-control"></textarea>
+                <textarea required name="BlogPost" style="height:100px;" placeholder="" class="form-control"></textarea>
             </div>
 
-            <input asp-for="ContentModel.authorId" hidden value="@user.Id" />
+            <input name="authorId" hidden value="@user.Id" />
             <button type="submit" class="btn btn-primary">Submit</button>
 
         </form>
     </div>
 
     <!--Add Recipe-->
-    <div class="RecipePost">
-        <form method="post" asp-page-handler="AddContent" asp-route-type="Recipe" style="padding-top:2em;">
+    <div  class="RecipePost">
+        <form novalidate method="post" enctype="multipart/form-data" asp-page-handler="AddContent" asp-route-type="Recipe" style="padding-top:2em;">
             <h4>Add a Recipe</h4>
             <hr />
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group">
-                <label>Article Name</label>
-                <input asp-for="ContentModel.BlogPostName" class="form-control" placeholder="Recipe Name" />
+                <label>Recipe Name</label>
+                <input required name="BlogPostName" class="form-control" placeholder="Recipe Name" />
             </div>
             <div class="form-group">
+                <label>Recipe Main Image</label>
+                <input required type="file" name="ImageFile" accept="image/*" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label>Image Source</label>
+                <input required name="ImageSource" class="form-control" placeholder="Image Source" />
+            </div>
+
+            <div class="form-group">
                 <label>Recipe Ingredients</label>
-                <input asp-for="ContentModel.RecipeIngredients" class="form-control tagsinput" placeholder="Recipe Ingredients **Seperated by Semicolon" />
+                <input name="RecipeIngredients" class="form-control tagsinput" placeholder="Recipe Ingredients **Seperated by Semicolon" />
             </div>
             <div class="form-group">
                 <label>Recipe Steps</label>
-                <input asp-for="ContentModel.RecipeSteps" class="form-control tagsinput" placeholder="Recipe steps **Separated by Semicolon" />
+                <input name="RecipeSteps" class="form-control tagsinput" placeholder="Recipe steps **Separated by Semicolon" />
             </div>
             <div class="form-group">
                 <label>Any extra Recipe talk</label>
-                <textarea asp-for="ContentModel.BlogPost" style="height:100px;" class="form-control"></textarea>
+                <textarea required name="BlogPost" style="height:100px;" class="form-control"></textarea>
             </div>
 
-            <input asp-for="ContentModel.authorId" hidden value="@user.Id" />
+            <input name="authorId" hidden value="@user.Id" />
             <button type="submit" class="btn btn-primary">Submit</button>
 
         </form>
@@ -131,13 +157,6 @@
         $('.tagsinput').tagsInput();
         //Jquery ish
 
-        $('.tagsinput').tagsInput({
-            interactive: true,
-            placeholder: 'Add a tag separated by ;',
-            hide: true,
-            delimiter: [',', ';'], // or a string with a single delimiter
-            unique: true,
-        });
 
         $(document).ready(function () {
 

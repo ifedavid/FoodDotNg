@@ -11,6 +11,6 @@ namespace FoodDotNg.Data
 
         public int Likes { get; set; }
 
-        public ArticleCategories Category { get; set; }
+        public Guid CategoryId { get; set; }
     }
 }

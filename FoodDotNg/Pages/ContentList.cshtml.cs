@@ -18,66 +18,46 @@ namespace FoodDotNg.Pages
         }
         public string PageName { get; set; }
 
+        public ArticleCategories Category { get; set; }
+
+        public int CurrentPage { get; set; } = 1;
+
+        public int Count { get; set; }
+
+        public int PageSize { get; set; } = 9;
+
+        public int TotalPages => (int)Math.Ceiling(decimal.Divide(Count, PageSize));
+
+        public bool EnablePrevious => CurrentPage > 1;
+
+        public bool EnableNext => CurrentPage < TotalPages;
         [BindProperty]
         public List<Articles> BlogPosts { get; set; }
-        public List<Events> EventPosts { get; set; }
-        public List<Recipes> RecipesPosts { get; set; }
 
-        public IActionResult OnGet(string pageName)
+        public IActionResult OnGet(string pageName, int currentPage)
         {
             PageName = pageName;
             var allArticles = _context.Articles.ToList();
             var allCategories = _context.ArticleCategories.ToList();
 
-            if(pageName == "Interviews")
+           foreach(var category in allCategories)
             {
-                var category = allCategories.Where(ac => ac.Name == pageName);
-                if(category == null)
+                if (pageName == category.Name)
                 {
-                    return NotFound();
+                    Category = category;
+                    CurrentPage = currentPage == 0 ? 1 : currentPage;
+
+                    Count = _context.Articles.Count();
+
+                    if (CurrentPage > TotalPages)
+                        CurrentPage = TotalPages;
+
+                    BlogPosts = _context.Articles.Where(a => a.Status == "Approved" && a.CategoryId == category.Id)
+                        .Skip((CurrentPage - 1) * PageSize)
+                        .Take(PageSize)
+                        .OrderBy(e => e.DateCreated)
+                        .ToList();
                 }
-                BlogPosts = allArticles.Where(a => a.Status == "Approved" && a.Category == category).OrderBy(ad => ad.DateCreated).ToList();
-            }
-            
-            if(pageName == "Food Life")
-            {
-                var category = allCategories.Where(ac => ac.Name == pageName);
-                if (category == null)
-                {
-                    return NotFound();
-                }
-                BlogPosts = allArticles.Where(a => a.Status == "Approved" && a.Category == category).OrderBy(ad => ad.DateCreated).ToList();
-            }
-
-            if (pageName == "Latest News")
-            {
-                var category = allCategories.Where(ac => ac.Name == pageName);
-                if (category == null)
-                {
-                    return NotFound();
-                }
-                BlogPosts = allArticles.Where(a => a.Status == "Approved" && a.Category == category).OrderBy(ad => ad.DateCreated).ToList();
-            }
-
-            if (pageName == "Cooking")
-            {
-                var category = allCategories.Where(ac => ac.Name == pageName);
-                if (category == null)
-                {
-                    return NotFound();
-                }
-                BlogPosts = allArticles.Where(a => a.Status == "Approved" && a.Category == category).OrderBy(ad => ad.DateCreated).ToList();
-            }
-
-
-            if (pageName == "Recipes")
-            {
-                RecipesPosts = _context.Recipes.Where(a => a.Status == "Approved").OrderBy(ad => ad.DateCreated).ToList();
-            }
-
-            if (pageName == "Events")
-            {
-                EventPosts = _context.Events.Where(a => a.Status == "Approved").OrderBy(ad => ad.DateCreated).ToList();
             }
 
             return Page();

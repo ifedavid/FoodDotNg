@@ -1,125 +1,94 @@
 ﻿@page
 @model IndexModel
+@inject UserManager<ApplicationUser> _userManager;
+@inject FoodDotNgDbContext _context;
 @{
     ViewData["Title"] = "Home page";
+    var categories = _context.ArticleCategories.ToList();
 }
 
+<style>
+    .catImages {
+        max-height: 300px;
+        height: 250px;
+        width: fit-content;
+        width: max-content;
+        object-fit: cover;
+        width: 100%;
+    }
 
+    .widthFit {
+        width: fit-content;
+        width: max-content;
+        width:100%;
+    }
+</style>
+
+
+@if (Model.SliderArticles == null || Model.SliderArticles.Count <= 0)
+{
+    <h5 style="text-align:center;">Something went wrong. Please try again</h5>
+}
+
+else
+{
 <!-- ****** Welcome Post Area Start ****** -->
 <section class="welcome-post-sliders owl-carousel">
 
-    <!-- Single Slide -->
-    <div class="welcome-single-slide">
-        <!-- Post Thumb -->
-        <img src="img/bg-img/slide-1.jpg" alt="">
-        <!-- Overlay Text -->
-        <div class="project_title">
-            <div class="post-date-commnents d-flex">
-                <a href="#">May 19, 2017</a>
-                <a href="#">5 Comment</a>
-            </div>
-            <a href="#">
-                <h5>“I’ve Come and I’m Gone”: A Tribute to Istanbul’s Street</h5>
-            </a>
-        </div>
-    </div>
 
-    <!-- Single Slide -->
-    <div class="welcome-single-slide">
-        <!-- Post Thumb -->
-        <img src="img/bg-img/slide-2.jpg" alt="">
-        <!-- Overlay Text -->
-        <div class="project_title">
-            <div class="post-date-commnents d-flex">
-                <a href="#">May 19, 2017</a>
-                <a href="#">5 Comment</a>
+    <!--Slider Articles-->
+    @foreach (var slider in Model.SliderArticles)
+    {
+        var userr = await _userManager.FindByIdAsync(slider.AuthorId);
+        <!-- Single Slide -->
+        <div class="welcome-single-slide">
+            <!-- Post Thumb -->
+            <img class="widthFit" height="500px" style="object-fit:cover;" src="@slider.ImageUrl" alt="">
+            <!-- Overlay Text -->
+            <div class="project_title">
+                <div class="post-date-commnents d-flex">
+                    <a href="#">@slider.DateCreated.ToShortDateString()</a>
+                    <a href="#">@userr.UserName</a>
+                </div>
+                <a href="/BlogPost/@slider.Id">
+                    <h5>@slider.Name</h5>
+                </a>
             </div>
-            <a href="#">
-                <h5>“I’ve Come and I’m Gone”: A Tribute to Istanbul’s Street</h5>
-            </a>
         </div>
-    </div>
-
-    <!-- Single Slide -->
-    <div class="welcome-single-slide">
-        <!-- Post Thumb -->
-        <img src="img/bg-img/slide-3.jpg" alt="">
-        <!-- Overlay Text -->
-        <div class="project_title">
-            <div class="post-date-commnents d-flex">
-                <a href="#">May 19, 2017</a>
-                <a href="#">5 Comment</a>
-            </div>
-            <a href="#">
-                <h5>“I’ve Come and I’m Gone”: A Tribute to Istanbul’s Street</h5>
-            </a>
-        </div>
-    </div>
-
-    <!-- Single Slide -->
-    <div class="welcome-single-slide">
-        <!-- Post Thumb -->
-        <img src="img/bg-img/slide-4.jpg" alt="">
-        <!-- Overlay Text -->
-        <div class="project_title">
-            <div class="post-date-commnents d-flex">
-                <a href="#">May 19, 2017</a>
-                <a href="#">5 Comment</a>
-            </div>
-            <a href="#">
-                <h5>“I’ve Come and I’m Gone”: A Tribute to Istanbul’s Street</h5>
-            </a>
-        </div>
-    </div>
-
-    <!-- Single Slide -->
-    <div class="welcome-single-slide">
-        <!-- Post Thumb -->
-        <img src="img/bg-img/slide-4.jpg" alt="">
-        <!-- Overlay Text -->
-        <div class="project_title">
-            <div class="post-date-commnents d-flex">
-                <a href="#">May 19, 2017</a>
-                <a href="#">5 Comment</a>
-            </div>
-            <a href="#">
-                <h5>“I’ve Come and I’m Gone”: A Tribute to Istanbul’s Street</h5>
-            </a>
-        </div>
-    </div>
-
+    }
 </section>
+}
 <!-- ****** Welcome Area End ****** -->
 <!-- ****** Categories Area Start ****** -->
 <section class="categories_area clearfix" id="about">
     <div class="container">
         <div class="row">
             <div class="col-12 col-md-6 col-lg-4">
-                <div class="single_catagory wow fadeInUp" data-wow-delay=".3s">
-                    <img src="img/catagory-img/1.jpg" alt="">
+                <div class="single_catagory wow fadeInUp" data-wow-delay=".2s">
+                    <img class="catImages" src="https://res.cloudinary.com/food-ng/image/upload/f_auto,q_32/v1592869640/g8ctpecjb9jsumz61gtl.jpg" alt="Recipes">
                     <div class="catagory-title">
-                        <a href="#">
+                        <a href="/Recipes">
                             <h5>Recipes</h5>
                         </a>
                     </div>
                 </div>
             </div>
             <div class="col-12 col-md-6 col-lg-4">
-                <div class="single_catagory wow fadeInUp" data-wow-delay=".6s">
-                    <img src="img/catagory-img/2.jpg" alt="">
+                <div class="single_catagory wow fadeInUp" data-wow-delay=".2s">
+                    <img class="catImages" src="https://res.cloudinary.com/food-ng/image/upload/f_auto,q_36/v1592829313/em8dullkkn77wgu0kqt6.jpg" alt="Events">
                     <div class="catagory-title">
-                        <a href="#">
+                        <a href="/Events">
                             <h5>Events</h5>
                         </a>
                     </div>
                 </div>
             </div>
             <div class="col-12 col-md-6 col-lg-4">
-                <div class="single_catagory wow fadeInUp" data-wow-delay=".9s">
-                    <img src="img/catagory-img/3.jpg" alt="">
+                <div class="single_catagory wow fadeInUp" data-wow-delay=".2s">
+                    <img class="catImages" src="https://res.cloudinary.com/food-ng/image/upload/f_auto,q_32/v1592702018/gabvz2myrtmc5dy0spru.jpg" alt="Ngerian Dishes">
                     <div class="catagory-title">
-                        <a href="#">
-                            <h5>Food Life</h5>
+                        <a href="/ContentList/?pageName=Nigerian Dishes">
+                            <h5>Nigerian Dishes</h5>
                         </a>
                     </div>
                 </div>
@@ -134,404 +103,212 @@
         <div class="row justify-content-center">
             <div class="col-12 col-lg-8">
                 <div class="row">
+                    <!--Main Interview-->
+                    @if (Model.InterviewArticle == null)
+                    {
+                        <h5>Nothing to show, Something went wrong somewhere. Please try again</h5>
+                    }
 
-                    <!-- Single Post -->
-                    <div class="col-12">
-                        <div class="single-post wow fadeInUp" data-wow-delay=".2s">
-                            <!-- Post Thumb -->
-                            <div class="post-thumb">
-                                <img src="img/blog-img/1.jpg" alt="">
-                            </div>
-                            <!-- Post Content -->
-                            <div class="post-content">
-                                <div class="post-meta d-flex">
-                                    <div class="post-author-date-area d-flex">
-                                        <!-- Post Author -->
-                                        <div class="post-author">
-                                            <a href="#">By Marian</a>
-                                        </div>
-                                        <!-- Post Date -->
-                                        <div class="post-date">
-                                            <a href="#">May 19, 2017</a>
-                                        </div>
-                                    </div>
-                                    <!-- Post Comment & Share Area -->
-                                    <div class="post-comment-share-area d-flex">
-                                        <!-- Post Favourite -->
-                                        <div class="post-favourite">
-                                            <a href="#"><i class="fa fa-heart-o" aria-hidden="true"></i> 10</a>
-                                        </div>
-                                        <!-- Post Comments -->
-                                        <div class="post-comments">
-                                            <a href="#"><i class="fa fa-comment-o" aria-hidden="true"></i> 12</a>
-                                        </div>
-                                        <!-- Post Share -->
-                                        <div class="post-share">
-                                            <a href="#"><i class="fa fa-share-alt" aria-hidden="true"></i></a>
-                                        </div>
-                                    </div>
+                    else
+                    {
+                        <!-- Single Post --> <!--Major Interview-->
+                        <div class="col-12">
+                            <div class="single-post wow fadeInUp" data-wow-delay=".2s">
+                                <!-- Post Thumb -->
+                                <div class="post-thumb">
+                                    <img class="widthFit" height="500px" style="object-fit:cover;" src="@Model.InterviewArticle.ImageUrl" alt="">
                                 </div>
-                                <a href="#">
-                                    <h2 class="post-headline">Boil The Kettle And Make A Cup Of Tea Folks, This Is Going To Be A Big One!</h2>
-                                </a>
-                                <p>Tiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodoconsequat.</p>
-                                <a href="#" class="read-more">Continue Reading..</a>
+                                <!-- Post Content -->
+                                <div class="post-content">
+                                    <div class="post-meta d-flex">
+                                        <div class="post-author-date-area d-flex">
+                                            <!-- Post Author -->
+                                            <div class="post-author">
+                                                @{
+                                                    var user = await _userManager.FindByIdAsync(Model.InterviewArticle.AuthorId);
+                                                }
+                                                <a href="#">@user.UserName</a>
+                                            </div>
+                                            <div class="post-author">
+                                                <a href="ContentList/?pageName=Interview">Interview</a>
+                                            </div>
+                                            <!-- Post Date -->
+                                            <div class="post-date">
+                                                @{
+                                                    var dateList = Model.InterviewArticle.DateCreated.ToLongDateString().Split(",");
+                                                }
+                                                <a href="#">@dateList[1] , @dateList[2]</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <a href="/BlogPost/@Model.InterviewArticle.Id">
+                                        <h2 class="post-headline">@Model.InterviewArticle.Name</h2>
+                                    </a>
+                                    <p>@Html.Raw(Model.InterviewArticle.ArticlePost.Substring(0, 200)) ...</p>
+                                    <a href="/BlogPost/@Model.InterviewArticle.Id" class="read-more">Continue Reading..</a>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <!-- Single Post -->
-                    <div class="col-12 col-md-6">
-                        <div class="single-post wow fadeInUp" data-wow-delay=".4s">
-                            <!-- Post Thumb -->
-                            <div class="post-thumb">
-                                <img src="img/blog-img/2.jpg" alt="">
-                            </div>
-                            <!-- Post Content -->
-                            <div class="post-content">
-                                <div class="post-meta d-flex">
-                                    <div class="post-author-date-area d-flex">
-                                        <!-- Post Author -->
-                                        <div class="post-author">
-                                            <a href="#">By Marian</a>
-                                        </div>
-                                        <!-- Post Date -->
-                                        <div class="post-date">
-                                            <a href="#">May 19, 2017</a>
-                                        </div>
+                    }
+
+                    <!--Recipes-->
+                    @if (Model.IndexRecipe == null || Model.IndexRecipe.Count <= 0)
+                    {
+                        <h5>Something Went wrong somewhere. Please try again</h5>
+                    }
+                    else
+                    {
+                        @foreach (var post in Model.IndexRecipe)
+                        {
+                            <!-- Single Post -->
+                            <div class="col-12 col-md-6">
+                                <div class="single-post wow fadeInUp" data-wow-delay=".4s">
+                                    <!-- Post Thumb -->
+                                    <div class="post-thumb">
+                                        <img class="widthFit" height="200px" style="object-fit:cover" src="@post.ImageUrl" alt="">
                                     </div>
-                                    <!-- Post Comment & Share Area -->
-                                    <div class="post-comment-share-area d-flex">
-                                        <!-- Post Favourite -->
-                                        <div class="post-favourite">
-                                            <a href="#"><i class="fa fa-heart-o" aria-hidden="true"></i> 10</a>
+                                    <!-- Post Content -->
+                                    <div class="post-content">
+                                        <div class="post-meta d-flex">
+                                            <div class="post-author-date-area d-flex">
+                                                <!-- Post Author -->
+                                                <div class="post-author">
+                                                    @{
+                                                        var usser = await _userManager.FindByIdAsync(post.AuthorId);
+                                                    }
+                                                    <a href="#">@usser.UserName</a>
+                                                </div>
+                                                <div class="post-author">
+                                                    <a href="#">Recipe</a>
+                                                </div>
+                                                <!-- Post Date -->
+                                                <div class="post-date">
+                                                    @{
+                                                        var dateStuff = post.DateCreated.ToLongDateString().Split(",");
+                                                    }
+                                                    <a href="#">@dateStuff[1], @dateStuff[2]</a>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <!-- Post Comments -->
-                                        <div class="post-comments">
-                                            <a href="#"><i class="fa fa-comment-o" aria-hidden="true"></i> 12</a>
-                                        </div>
-                                        <!-- Post Share -->
-                                        <div class="post-share">
-                                            <a href="#"><i class="fa fa-share-alt" aria-hidden="true"></i></a>
-                                        </div>
+                                        <a href="/BlogPost/@post.Id">
+                                            <h4 class="post-headline">@post.Name</h4>
+                                        </a>
                                     </div>
                                 </div>
-                                <a href="#">
-                                    <h4 class="post-headline">Where To Get The Best Sunday Roast In The Cotswolds</h4>
-                                </a>
                             </div>
-                        </div>
-                    </div>
 
-                    <!-- Single Post -->
-                    <div class="col-12 col-md-6">
-                        <div class="single-post wow fadeInUp" data-wow-delay=".6s">
-                            <!-- Post Thumb -->
-                            <div class="post-thumb">
-                                <img src="img/blog-img/3.jpg" alt="">
-                            </div>
-                            <!-- Post Content -->
-                            <div class="post-content">
-                                <div class="post-meta d-flex">
-                                    <div class="post-author-date-area d-flex">
-                                        <!-- Post Author -->
-                                        <div class="post-author">
-                                            <a href="#">By Marian</a>
-                                        </div>
-                                        <!-- Post Date -->
-                                        <div class="post-date">
-                                            <a href="#">May 19, 2017</a>
-                                        </div>
+                        }
+
+                    }
+
+                    <!--Events-->
+                    @if (Model.IndexEvents == null || Model.IndexEvents.Count <= 0)
+                    {
+                        <h5>Nothing to show, Something went wrong. Pleas try again</h5>
+                    }
+                    else
+                    {
+                        @foreach (var post in Model.IndexEvents)
+                        {
+                            <!-- Single Post -->
+                            <div class="col-12 col-md-6">
+                                <div class="single-post wow fadeInUp" data-wow-delay=".1s">
+                                    <!-- Post Thumb -->
+                                    <div class="post-thumb">
+                                        <img class="widthFit" height="200px" style="object-fit:cover" src="@post.ImageUrl" alt="">
                                     </div>
-                                    <!-- Post Comment & Share Area -->
-                                    <div class="post-comment-share-area d-flex">
-                                        <!-- Post Favourite -->
-                                        <div class="post-favourite">
-                                            <a href="#"><i class="fa fa-heart-o" aria-hidden="true"></i> 10</a>
+                                    <!-- Post Content -->
+                                    <div class="post-content">
+                                        <div class="post-meta d-flex">
+                                            <div class="post-author-date-area d-flex">
+                                                <!-- Post Author -->
+                                                <div class="post-author">
+                                                    @{
+                                                        var use = await _userManager.FindByIdAsync(post.AuthorId);
+                                                    }
+                                                    <a href="#">@use.UserName</a>
+                                                </div>
+                                                <div class="post-author">
+                                                    <a href="#">Event</a>
+                                                </div>
+                                                <!-- Post Date -->
+                                                <div class="post-date">
+                                                    @{
+                                                        var dateStuffer = post.DateCreated.ToLongDateString().Split(",");
+
+                                                    }
+                                                    <a href="#">@dateStuffer[1], @dateStuffer[2]</a>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <!-- Post Comments -->
-                                        <div class="post-comments">
-                                            <a href="#"><i class="fa fa-comment-o" aria-hidden="true"></i> 12</a>
-                                        </div>
-                                        <!-- Post Share -->
-                                        <div class="post-share">
-                                            <a href="#"><i class="fa fa-share-alt" aria-hidden="true"></i></a>
-                                        </div>
+                                        <a href="BlogPost/@post.Id">
+                                            <h4 class="post-headline">@post.Name</h4>
+                                        </a>
                                     </div>
                                 </div>
-                                <a href="#">
-                                    <h4 class="post-headline">The Top Breakfast And Brunch Spots In Hove, Brighton</h4>
-                                </a>
                             </div>
-                        </div>
-                    </div>
+                        }
 
-                    <!-- Single Post -->
-                    <div class="col-12 col-md-6">
-                        <div class="single-post wow fadeInUp" data-wow-delay=".8s">
-                            <!-- Post Thumb -->
-                            <div class="post-thumb">
-                                <img src="img/blog-img/4.jpg" alt="">
-                            </div>
-                            <!-- Post Content -->
-                            <div class="post-content">
-                                <div class="post-meta d-flex">
-                                    <div class="post-author-date-area d-flex">
-                                        <!-- Post Author -->
-                                        <div class="post-author">
-                                            <a href="#">By Marian</a>
-                                        </div>
-                                        <!-- Post Date -->
-                                        <div class="post-date">
-                                            <a href="#">May 19, 2017</a>
-                                        </div>
-                                    </div>
-                                    <!-- Post Comment & Share Area -->
-                                    <div class="post-comment-share-area d-flex">
-                                        <!-- Post Favourite -->
-                                        <div class="post-favourite">
-                                            <a href="#"><i class="fa fa-heart-o" aria-hidden="true"></i> 10</a>
-                                        </div>
-                                        <!-- Post Comments -->
-                                        <div class="post-comments">
-                                            <a href="#"><i class="fa fa-comment-o" aria-hidden="true"></i> 12</a>
-                                        </div>
-                                        <!-- Post Share -->
-                                        <div class="post-share">
-                                            <a href="#"><i class="fa fa-share-alt" aria-hidden="true"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <a href="#">
-                                    <h4 class="post-headline">The 10 Best Pubs In The Lake District, Cumbria</h4>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
+                    }
 
-                    <!-- Single Post -->
-                    <div class="col-12 col-md-6">
-                        <div class="single-post wow fadeInUp" data-wow-delay="1s">
-                            <!-- Post Thumb -->
-                            <div class="post-thumb">
-                                <img src="img/blog-img/5.jpg" alt="">
-                            </div>
-                            <!-- Post Content -->
-                            <div class="post-content">
-                                <div class="post-meta d-flex">
-                                    <div class="post-author-date-area d-flex">
-                                        <!-- Post Author -->
-                                        <div class="post-author">
-                                            <a href="#">By Marian</a>
-                                        </div>
-                                        <!-- Post Date -->
-                                        <div class="post-date">
-                                            <a href="#">May 19, 2017</a>
-                                        </div>
-                                    </div>
-                                    <!-- Post Comment & Share Area -->
-                                    <div class="post-comment-share-area d-flex">
-                                        <!-- Post Favourite -->
-                                        <div class="post-favourite">
-                                            <a href="#"><i class="fa fa-heart-o" aria-hidden="true"></i> 10</a>
-                                        </div>
-                                        <!-- Post Comments -->
-                                        <div class="post-comments">
-                                            <a href="#"><i class="fa fa-comment-o" aria-hidden="true"></i> 12</a>
-                                        </div>
-                                        <!-- Post Share -->
-                                        <div class="post-share">
-                                            <a href="#"><i class="fa fa-share-alt" aria-hidden="true"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <a href="#">
-                                    <h4 class="post-headline">The 10 Best Brunch Spots In Newcastle, England</h4>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
 
                     <!-- ******* List Blog Area Start ******* -->
-                    <!-- Single Post -->
-                    <div class="col-12">
-                        <div class="list-blog single-post d-sm-flex wow fadeInUpBig" data-wow-delay=".2s">
-                            <!-- Post Thumb -->
-                            <div class="post-thumb">
-                                <img src="img/blog-img/6.jpg" alt="">
-                            </div>
-                            <!-- Post Content -->
-                            <div class="post-content">
-                                <div class="post-meta d-flex">
-                                    <div class="post-author-date-area d-flex">
-                                        <!-- Post Author -->
-                                        <div class="post-author">
-                                            <a href="#">By Marian</a>
-                                        </div>
-                                        <!-- Post Date -->
-                                        <div class="post-date">
-                                            <a href="#">May 19, 2017</a>
-                                        </div>
-                                    </div>
-                                    <!-- Post Comment & Share Area -->
-                                    <div class="post-comment-share-area d-flex">
-                                        <!-- Post Favourite -->
-                                        <div class="post-favourite">
-                                            <a href="#"><i class="fa fa-heart-o" aria-hidden="true"></i> 10</a>
-                                        </div>
-                                        <!-- Post Comments -->
-                                        <div class="post-comments">
-                                            <a href="#"><i class="fa fa-comment-o" aria-hidden="true"></i> 12</a>
-                                        </div>
-                                        <!-- Post Share -->
-                                        <div class="post-share">
-                                            <a href="#"><i class="fa fa-share-alt" aria-hidden="true"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <a href="#">
-                                    <h4 class="post-headline">The 10 Best Bars By The Seaside In Blackpool, UK</h4>
-                                </a>
-                                <p>Tiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation</p>
-                                <a href="#" class="read-more">Continue Reading..</a>
-                            </div>
-                        </div>
-                    </div>
+                    <!--Some other Articles-->
+                    @{ var someArticles = Model.AllArticles.Take(4).ToList(); }
+                    @if (someArticles.Count <= 0 || someArticles == null)
+                    {
+                        <h5>Nothing to show. Something went wrong. Please try again</h5>
+                    }
+                    else
+                    {
+                        @foreach (var post in someArticles)
+                        {
+                            var useer = await _userManager.FindByIdAsync(post.AuthorId);
+                            var category = categories.Where(c => c.Id == post.CategoryId).FirstOrDefault();
 
-                    <!-- Single Post -->
-                    <div class="col-12">
-                        <div class="list-blog single-post d-sm-flex wow fadeInUpBig" data-wow-delay=".4s">
-                            <!-- Post Thumb -->
-                            <div class="post-thumb">
-                                <img src="img/blog-img/7.jpg" alt="">
-                            </div>
-                            <!-- Post Content -->
-                            <div class="post-content">
-                                <div class="post-meta d-flex">
-                                    <div class="post-author-date-area d-flex">
-                                        <!-- Post Author -->
-                                        <div class="post-author">
-                                            <a href="#">By Marian</a>
-                                        </div>
-                                        <!-- Post Date -->
-                                        <div class="post-date">
-                                            <a href="#">May 19, 2017</a>
-                                        </div>
+                            <!-- Single Post -->
+                            <div class="col-12">
+                                <div class="list-blog single-post d-sm-flex wow fadeInUpBig" data-wow-delay=".2s">
+                                    <!-- Post Thumb -->
+                                    <div class="post-thumb">
+                                        <img class="widthFit" height="200px" style="object-fit:cover;" src="@post.ImageUrl" alt="">
                                     </div>
-                                    <!-- Post Comment & Share Area -->
-                                    <div class="post-comment-share-area d-flex">
-                                        <!-- Post Favourite -->
-                                        <div class="post-favourite">
-                                            <a href="#"><i class="fa fa-heart-o" aria-hidden="true"></i> 10</a>
-                                        </div>
-                                        <!-- Post Comments -->
-                                        <div class="post-comments">
-                                            <a href="#"><i class="fa fa-comment-o" aria-hidden="true"></i> 12</a>
-                                        </div>
-                                        <!-- Post Share -->
-                                        <div class="post-share">
-                                            <a href="#"><i class="fa fa-share-alt" aria-hidden="true"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <a href="#">
-                                    <h4 class="post-headline">How To Get a Narcissist to Feel Empathy</h4>
-                                </a>
-                                <p>Tiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation</p>
-                                <a href="#" class="read-more">Continue Reading..</a>
-                            </div>
-                        </div>
-                    </div>
+                                    <!-- Post Content -->
+                                    <div class="post-content">
+                                        <div class="post-meta d-flex">
+                                            <div class="post-author-date-area d-flex">
+                                                <!-- Post Author -->
+                                                <div class="post-author">
+                                                    <a href="#">@useer.UserName</a>
+                                                </div>
+                                                <div class="post-author">
 
-                    <!-- Single Post -->
-                    <div class="col-12">
-                        <div class="list-blog single-post d-sm-flex wow fadeInUpBig" data-wow-delay=".6s">
-                            <!-- Post Thumb -->
-                            <div class="post-thumb">
-                                <img src="img/blog-img/8.jpg" alt="">
-                            </div>
-                            <!-- Post Content -->
-                            <div class="post-content">
-                                <div class="post-meta d-flex">
-                                    <div class="post-author-date-area d-flex">
-                                        <!-- Post Author -->
-                                        <div class="post-author">
-                                            <a href="#">By Marian</a>
-                                        </div>
-                                        <!-- Post Date -->
-                                        <div class="post-date">
-                                            <a href="#">May 19, 2017</a>
-                                        </div>
-                                    </div>
-                                    <!-- Post Comment & Share Area -->
-                                    <div class="post-comment-share-area d-flex">
-                                        <!-- Post Favourite -->
-                                        <div class="post-favourite">
-                                            <a href="#"><i class="fa fa-heart-o" aria-hidden="true"></i> 10</a>
-                                        </div>
-                                        <!-- Post Comments -->
-                                        <div class="post-comments">
-                                            <a href="#"><i class="fa fa-comment-o" aria-hidden="true"></i> 12</a>
-                                        </div>
-                                        <!-- Post Share -->
-                                        <div class="post-share">
-                                            <a href="#"><i class="fa fa-share-alt" aria-hidden="true"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <a href="#">
-                                    <h4 class="post-headline">Bristol's 10 Amazing Weekend Brunches And Late Breakfasts</h4>
-                                </a>
-                                <p>Tiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation</p>
-                                <a href="#" class="read-more">Continue Reading..</a>
-                            </div>
-                        </div>
-                    </div>
+                                                    <a href="#">@category.Name</a>
+                                                </div>
+                                                <!-- Post Date -->
+                                                <div class="post-date">
+                                                    @{
+                                                        var dateLists = post.DateCreated.ToLongDateString().Split(",");
 
-                    <!-- Single Post -->
-                    <div class="col-12">
-                        <div class="list-blog single-post d-sm-flex wow fadeInUpBig" data-wow-delay=".8s">
-                            <!-- Post Thumb -->
-                            <div class="post-thumb">
-                                <img src="img/blog-img/9.jpg" alt="">
-                            </div>
-                            <!-- Post Content -->
-                            <div class="post-content">
-                                <div class="post-meta d-flex">
-                                    <div class="post-author-date-area d-flex">
-                                        <!-- Post Author -->
-                                        <div class="post-author">
-                                            <a href="#">By Marian</a>
+                                                    }
+                                                    <a href="#">@dateLists[1], @dateLists[2]</a>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <!-- Post Date -->
-                                        <div class="post-date">
-                                            <a href="#">May 19, 2017</a>
-                                        </div>
-                                    </div>
-                                    <!-- Post Comment & Share Area -->
-                                    <div class="post-comment-share-area d-flex">
-                                        <!-- Post Favourite -->
-                                        <div class="post-favourite">
-                                            <a href="#"><i class="fa fa-heart-o" aria-hidden="true"></i> 10</a>
-                                        </div>
-                                        <!-- Post Comments -->
-                                        <div class="post-comments">
-                                            <a href="#"><i class="fa fa-comment-o" aria-hidden="true"></i> 12</a>
-                                        </div>
-                                        <!-- Post Share -->
-                                        <div class="post-share">
-                                            <a href="#"><i class="fa fa-share-alt" aria-hidden="true"></i></a>
-                                        </div>
+                                        <a href="/BlogPost/@post.Id">
+                                            <h4 class="post-headline">@post.Name</h4>
+                                        </a>
+                                        <p>@Html.Raw(post.ArticlePost.Substring(0, 50))</p>
+                                        <a href="/BlogPost/@post.Id" class="read-more">Continue Reading..</a>
                                     </div>
                                 </div>
-                                <a href="#">
-                                    <h4 class="post-headline">10 Of The Best Places To Eat In Liverpool, England</h4>
-                                </a>
-                                <p>Tiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation</p>
-                                <a href="#" class="read-more">Continue Reading..</a>
                             </div>
-                        </div>
-                    </div>
+
+                        }
+
+                    }
+
 
                 </div>
             </div>
@@ -548,7 +325,7 @@
                             <img src="img/about-img/1.jpg" alt="">
                         </div>
                         <h4 class="font-shadow-into-light">FoodDotNg</h4>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt</p>
+                        <p>We're committed to bringing you all the beauty and happenings in the Nigerian food industry</p>
                     </div>
 
                     <!-- Single Widget Area -->
@@ -564,85 +341,57 @@
                         </div>
                     </div>
 
-                    <!-- Single Widget Area -->
+                    <!-- Single Widget Area --> <!--Popular Post-->
                     <div class="single-widget-area popular-post-widget">
                         <div class="widget-title text-center">
                             <h6>Populer Post</h6>
                         </div>
-                        <!-- Single Popular Post -->
-                        <div class="single-populer-post d-flex">
-                            <img src="img/sidebar-img/1.jpg" alt="">
-                            <div class="post-content">
-                                <a href="#">
-                                    <h6>Top Wineries To Visit In England</h6>
-                                </a>
-                                <p>Tuesday, October 3, 2017</p>
-                            </div>
-                        </div>
-                        <!-- Single Popular Post -->
-                        <div class="single-populer-post d-flex">
-                            <img src="img/sidebar-img/2.jpg" alt="">
-                            <div class="post-content">
-                                <a href="#">
-                                    <h6>The 8 Best Gastro Pubs In Bath</h6>
-                                </a>
-                                <p>Tuesday, October 3, 2017</p>
-                            </div>
-                        </div>
-                        <!-- Single Popular Post -->
-                        <div class="single-populer-post d-flex">
-                            <img src="img/sidebar-img/3.jpg" alt="">
-                            <div class="post-content">
-                                <a href="#">
-                                    <h6>Zermatt Unplugged the best festival</h6>
-                                </a>
-                                <p>Tuesday, October 3, 2017</p>
-                            </div>
-                        </div>
-                        <!-- Single Popular Post -->
-                        <div class="single-populer-post d-flex">
-                            <img src="img/sidebar-img/4.jpg" alt="">
-                            <div class="post-content">
-                                <a href="#">
-                                    <h6>Harrogate's Top 10 Independent Eats</h6>
-                                </a>
-                                <p>Tuesday, October 3, 2017</p>
-                            </div>
-                        </div>
-                        <!-- Single Popular Post -->
-                        <div class="single-populer-post d-flex">
-                            <img src="img/sidebar-img/5.jpg" alt="">
-                            <div class="post-content">
-                                <a href="#">
-                                    <h6>Eating Out On A Budget In Oxford</h6>
-                                </a>
-                                <p>Tuesday, October 3, 2017</p>
-                            </div>
-                        </div>
+                        @if (Model.PopularPost == null || Model.PopularPost.Count <= 0)
+                        {
+                            <h5>Nothing to show, Something went wrong. Please try again</h5>
+                        }
+                        else
+                        {
+                            @foreach (var post in Model.PopularPost)
+                            {
+                                <!-- Single Popular Post -->
+                                <div class="single-populer-post d-flex">
+                                    <img class="widthFit" height="150px" style="object-fit:cover" src="@post.ImageUrl" alt="">
+                                    <div class="post-content">
+                                        <a href="BlogPost/@post.Id">
+                                            <h6>@post.Name</h6>
+                                        </a>
+                                        <p>@post.DateCreated.ToLongDateString()</p>
+                                    </div>
+                                </div>
+                            }
+
+                        }
+
                     </div>
 
-                     @*Single Widget Area 
-                    <div class="single-widget-area add-widget text-center">
-                        <div class="add-widget-area">
-                            <img src="img/sidebar-img/6.jpg" alt="">
-                            <div class="add-text">
-                                <div class="yummy-table">
-                                    <div class="yummy-table-cell">
-                                        <h2>Cooking Book</h2>
-                                        <p>Buy Book Online Now!</p>
-                                        <a href="#" class="add-btn">Buy Now</a>
+                    @*Single Widget Area
+                        <div class="single-widget-area add-widget text-center">
+                            <div class="add-widget-area">
+                                <img src="img/sidebar-img/6.jpg" alt="">
+                                <div class="add-text">
+                                    <div class="yummy-table">
+                                        <div class="yummy-table-cell">
+                                            <h2>Cooking Book</h2>
+                                            <p>Buy Book Online Now!</p>
+                                            <a href="#" class="add-btn">Buy Now</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>*@
+                        </div>*@
 
                     <!-- Single Widget Area -->
                     <div class="single-widget-area newsletter-widget">
                         <div class="widget-title text-center">
                             <h6>Newsletter</h6>
                         </div>
-                        <p>Subscribe our newsletter gor get notification about new updates, information discount, etc.</p>
+                        <p>Subscribe our newsletter and get notification about new updates, information, etc.</p>
                         <div class="newsletter-form">
                             <form action="#" method="post">
                                 <input type="email" name="newsletter-email" id="email" placeholder="Your email">
@@ -656,3 +405,7 @@
     </div>
 </section>
 <!-- ****** Blog Area End ****** -->
+<!-- Instagram Item -->
+<div style="padding-left:20px; padding-right:20px;">
+    <iframe src='https://www.juicer.io/api/feeds/mr_ackermann/iframe' frameborder='0' width='100%' height='450px'></iframe>
+</div>
