@@ -95,7 +95,7 @@
                                 </a>
                                 <p>@post.StartDate.ToLongDateString() - @post.EndDate.ToLongDateString()</p>
                                 <p>@Html.Raw(@post.EventPost.Substring(0, 320)) ...</p>
-                                <a href="#" class="read-more">Continue Reading..</a>
+                                <a href="/EventPost/@post.Id" class="read-more">Continue Reading..</a>
                             </div>
                         </div>
                     </div>
