@@ -25,5 +25,6 @@ namespace FoodDotNg.Data
 
         [AllowNull]
         public string ImageUrl { get; set; }
+        public string ImageSource { get; set; }
     }
 }

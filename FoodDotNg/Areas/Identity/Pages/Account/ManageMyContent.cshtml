@@ -62,7 +62,7 @@
                     </td>
                     }
 
-                    @if (article.Status != "Approve")
+                    @if (article.Status != "Approved")
                     {
                     <td>
                         <form method="post">
@@ -118,17 +118,24 @@
                     <td>
                     <a class="btn btn-info" href="#">Edit</a>
                     </td>
-                    <td>
+                    @if(recipe.Status != "Deleted")
+                    {
+                            <td>
                         <form method="post">
                             <button asp-page-handler="Delete" class="btn btn-danger" asp-route-type="Recipe;@recipe.Id">Delete</button>
                         </form>
                     </td>
-                    
-                    <td>
+                    }
+                
+                    @if(recipe.Status != "Approved")
+                    {
+                        <td>
                         <form method="post">
                             <button asp-page-handler="Approve" class="btn btn-success" asp-route-type="Recipe;@recipe.Id">Approve</button>
                         </form>
                     </td>
+                    }
+                  
                     
                     <td>
                     <a class="btn btn-secondary" href="/RecipePost/@recipe.Id">View</a>
@@ -180,22 +187,30 @@
                     <td>@user.UserName</td>
                     <td>@eventt.StartDate.ToShortDateString()</td>
                     <td>@eventt.EndDate.ToShortDateString()</td>
-                    <td>@eventt.Duration(eventt.StartDate, eventt.EndDate)</td>
+                    <td>@eventt.Duration(eventt.StartDate, eventt.EndDate) days</td>
                     <td>@eventt.Status</td>
                     <td>
                     <a class="btn btn-info" href="#">Edit</a>
                     </td>
-                    <td>
+                    @if(eventt.Status != "Deleted")
+                    {
+                         <td>
                         <form method="post">
                             <button asp-page-handler="Delete" class="btn btn-danger" asp-route-type="Event;@eventt.Id">Delete</button>
                         </form>
                     </td>
+                    }
+                   
                     
-                    <td>
+                    @if(eventt.Status != "Approved")
+                    {
+                         <td>
                         <form method="post">
                             <button asp-page-handler="Approve" class="btn btn-success" asp-route-type="Event;@eventt.Id">Approve</button>
                         </form>
                     </td>
+                    }
+                   
                     
                     <td>
                     <a class="btn btn-secondary" href="/EventPost/@eventt.Id">View</a>

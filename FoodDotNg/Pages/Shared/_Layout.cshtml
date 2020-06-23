@@ -22,7 +22,7 @@
     <link rel="icon" href="~/img/FoodDotNg.png">
 
     <!-- Core Stylesheet -->
-    <link href="~/css/style.css" rel="stylesheet">
+    <link href="~/css/style.css" asp-append-version="true" rel="stylesheet">
 
     <!-- Responsive CSS -->
     <link href="~/css/responsive/responsive.css" rel="stylesheet">
@@ -71,7 +71,7 @@
                 <div class="col-12">
                     <div class="logo_area text-center">
                         <a href="/Index" class="yummy-logo">FoodDotNg <p style="font-size:18px;">For Food Only...</p></a>
-                        
+
                     </div>
                 </div>
             </div>
@@ -97,7 +97,7 @@
                                     <a class="nav-link" href="/Recipes">Recipes</a>
                                 </li>
                                 <li class="@(view == "/ContentList"? "nav-item dropdown active": "nav-item dropdown")">
-                                    <a class="nav-link dropdown-toggle" href="#" id="yummyDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Categories</a>
+                                    <a class="nav-link dropdown-toggle" href="#" id="yummyDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Articles</a>
                                     <div class="dropdown-menu" aria-labelledby="yummyDropdown">
                                         @{
                                             @foreach (var category in categories)
@@ -129,11 +129,12 @@
     </div>
 
     <!-- ****** Instagram Area Start ****** -->
-
+ 
 
     <div class="container">
         <div class="row">
             <div class="col-12">
+
                 <div style=" position:relative; display:block; width: 100%">
 
                     <div class="footer-social-area d-flex">
@@ -143,9 +144,7 @@
                         <div class="single-icon">
                             <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i><span>Twitter</span></a>
                         </div>
-                        <div class="single-icon">
-                            <a href="#"><i class="fa fa-linkedin-square" aria-hidden="true"></i><span>linkedin</span></a>
-                        </div>
+
                         <div class="single-icon">
                             <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i><span>Instagram</span></a>
                         </div>
@@ -157,12 +156,14 @@
             </div>
         </div>
     </div>
+
     <!-- ****** Footer Social Icon Area End ****** -->
     <!-- ****** Footer Menu Area Start ****** -->
     <footer class="footer_area">
         <div class="container">
             <div class="row">
                 <div class="col-12">
+
                     <div class="footer-content">
                         <!-- Logo Area Start -->
                         <div class="footer-logo-area text-center">
@@ -181,7 +182,7 @@
                                         <a class="nav-link" href="/Recipes">Recipes</a>
                                     </li>
                                     <li class="@(view == "/ContentList"? "nav-item dropdown active": "nav-item dropdown")">
-                                        <a class="nav-link dropdown-toggle" href="#" id="yummyDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Categories</a>
+                                        <a class="nav-link dropdown-toggle" href="#" id="yummyDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Articles</a>
                                         <div class="dropdown-menu" aria-labelledby="yummyDropdown">
                                             @{
                                                 @foreach (var category in categories)

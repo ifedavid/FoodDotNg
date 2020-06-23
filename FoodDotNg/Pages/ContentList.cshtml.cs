@@ -18,12 +18,23 @@ namespace FoodDotNg.Pages
         }
         public string PageName { get; set; }
 
+        public ArticleCategories Category { get; set; }
+
+        public int CurrentPage { get; set; } = 1;
+
+        public int Count { get; set; }
+
+        public int PageSize { get; set; } = 9;
+
+        public int TotalPages => (int)Math.Ceiling(decimal.Divide(Count, PageSize));
+
+        public bool EnablePrevious => CurrentPage > 1;
+
+        public bool EnableNext => CurrentPage < TotalPages;
         [BindProperty]
         public List<Articles> BlogPosts { get; set; }
-        public List<Events> EventPosts { get; set; }
-        public List<Recipes> RecipesPosts { get; set; }
 
-        public IActionResult OnGet(string pageName)
+        public IActionResult OnGet(string pageName, int currentPage)
         {
             PageName = pageName;
             var allArticles = _context.Articles.ToList();
@@ -33,7 +44,19 @@ namespace FoodDotNg.Pages
             {
                 if (pageName == category.Name)
                 {
-                    BlogPosts = allArticles.Where(a => a.CategoryId == category.Id && a.Status == "Approved").ToList();
+                    Category = category;
+                    CurrentPage = currentPage == 0 ? 1 : currentPage;
+
+                    Count = _context.Articles.Count();
+
+                    if (CurrentPage > TotalPages)
+                        CurrentPage = TotalPages;
+
+                    BlogPosts = _context.Articles.Where(a => a.Status == "Approved" && a.CategoryId == category.Id)
+                        .Skip((CurrentPage - 1) * PageSize)
+                        .Take(PageSize)
+                        .OrderBy(e => e.DateCreated)
+                        .ToList();
                 }
             }
 

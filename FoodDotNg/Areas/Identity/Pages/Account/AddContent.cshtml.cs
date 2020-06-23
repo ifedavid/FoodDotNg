@@ -48,15 +48,16 @@ namespace FoodDotNg.Areas.Identity.Pages.Account
             {
                 await ContentModel.ImageFile.CopyToAsync(filestream);
             }
-
             var uploadParameters = new ImageUploadParams()
             {
-                File = new FileDescription(path)
+                File = new FileDescription(path),
+               
             };
+
 
             var uploadResult = await _cloudinary.UploadAsync(uploadParameters);
 
-            var imageUrl = uploadResult.SecureUrl.AbsoluteUri;
+            var imageUrl = _cloudinary.Api.UrlImgUp.Transform(new Transformation().Quality(40).FetchFormat("auto")).BuildUrl(uploadResult.PublicId);
 
             if (System.IO.File.Exists(path)) System.IO.File.Delete(path);
 
@@ -86,7 +87,8 @@ namespace FoodDotNg.Areas.Identity.Pages.Account
                     AuthorId = ContentModel.authorId,
                     DateCreated = DateTime.UtcNow,
                     DateModified = DateTime.UtcNow,
-                    ImageUrl = imageUrll
+                    ImageUrl = imageUrll,
+                    ImageSource = ContentModel.ImageSource
                 };
 
                await _context.Events.AddAsync(even_t);
@@ -109,12 +111,13 @@ namespace FoodDotNg.Areas.Identity.Pages.Account
                     Name = ContentModel.BlogPostName,
                     ArticlePost = ContentModel.BlogPost,
                     CategoryId = ContentModel.articleCategoryId,
-                    Category = category,
                     Status = "Pending",
                     AuthorId = ContentModel.authorId,
                     DateCreated = DateTime.UtcNow,
                     DateModified = DateTime.UtcNow,
-                    ImageUrl = imageUrll
+                    ImageUrl = imageUrll,
+                    ImageSource = ContentModel.ImageSource
+
                 };
 
                 await _context.Articles.AddAsync(article);
@@ -134,7 +137,8 @@ namespace FoodDotNg.Areas.Identity.Pages.Account
                     AuthorId = ContentModel.authorId,
                     DateCreated = DateTime.UtcNow,
                     DateModified = DateTime.UtcNow,
-                    ImageUrl = imageUrll
+                    ImageUrl = imageUrll,
+                    ImageSource = ContentModel.ImageSource
                 };
 
                 await _context.Recipes.AddAsync(recipe);
@@ -158,5 +162,6 @@ namespace FoodDotNg.Areas.Identity.Pages.Account
         public string RecipeSteps { get; set; }
         public string BlogPost { get; set; }
         public IFormFile ImageFile { get; set; }
+        public string ImageSource { get; set; }
     }
 }

@@ -4,14 +4,16 @@ using FoodDotNg.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FoodDotNg.Data.Migrations
 {
     [DbContext(typeof(FoodDotNgDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200623022322_finishing touches5")]
+    partial class finishingtouches5
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -121,10 +123,10 @@ namespace FoodDotNg.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("ff4021db-d40d-4510-acde-fbc307e7f3c5"),
+                            Id = new Guid("74c6791d-8c99-486c-8b2e-e929a5a0aeee"),
                             AuthorId = "375587fa-0370-4d26-b72f-5acc5be09121",
-                            DateCreated = new DateTime(2020, 6, 23, 3, 36, 30, 647, DateTimeKind.Utc).AddTicks(1910),
-                            DateModified = new DateTime(2020, 6, 23, 3, 36, 30, 647, DateTimeKind.Utc).AddTicks(2856),
+                            DateCreated = new DateTime(2020, 6, 23, 2, 23, 21, 402, DateTimeKind.Utc).AddTicks(95),
+                            DateModified = new DateTime(2020, 6, 23, 2, 23, 21, 402, DateTimeKind.Utc).AddTicks(830),
                             ImageUrl = "https://res.cloudinary.com/food-ng/image/upload/q_41/v1592766978/Static%20Images/Interview.jpg",
                             IsActive = true,
                             Name = "Interviews",
@@ -132,10 +134,10 @@ namespace FoodDotNg.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("767861a8-0acc-472d-8da8-dd72c782bd51"),
+                            Id = new Guid("b0e13112-28eb-4e93-a093-dea9018325b0"),
                             AuthorId = "375587fa-0370-4d26-b72f-5acc5be09121",
-                            DateCreated = new DateTime(2020, 6, 23, 3, 36, 30, 647, DateTimeKind.Utc).AddTicks(6464),
-                            DateModified = new DateTime(2020, 6, 23, 3, 36, 30, 647, DateTimeKind.Utc).AddTicks(6488),
+                            DateCreated = new DateTime(2020, 6, 23, 2, 23, 21, 402, DateTimeKind.Utc).AddTicks(3698),
+                            DateModified = new DateTime(2020, 6, 23, 2, 23, 21, 402, DateTimeKind.Utc).AddTicks(3714),
                             ImageUrl = "https://res.cloudinary.com/food-ng/image/upload/q_43/v1592878239/Static%20Images/FoodCulture.jpg",
                             IsActive = true,
                             Name = "Food Culture",
@@ -143,10 +145,10 @@ namespace FoodDotNg.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("285bfbb2-aa81-458d-915e-06ebf2813595"),
+                            Id = new Guid("dc89fa01-703d-459d-9ccb-6db5684354b3"),
                             AuthorId = "375587fa-0370-4d26-b72f-5acc5be09121",
-                            DateCreated = new DateTime(2020, 6, 23, 3, 36, 30, 647, DateTimeKind.Utc).AddTicks(6666),
-                            DateModified = new DateTime(2020, 6, 23, 3, 36, 30, 647, DateTimeKind.Utc).AddTicks(6669),
+                            DateCreated = new DateTime(2020, 6, 23, 2, 23, 21, 402, DateTimeKind.Utc).AddTicks(3777),
+                            DateModified = new DateTime(2020, 6, 23, 2, 23, 21, 402, DateTimeKind.Utc).AddTicks(3778),
                             ImageUrl = "https://res.cloudinary.com/food-ng/image/upload/q_42/v1592767320/Static%20Images/LatestNews.jpg",
                             IsActive = true,
                             Name = "Latest News",
@@ -154,10 +156,10 @@ namespace FoodDotNg.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("48a59982-9c23-45e2-b6a0-fc49223d46ad"),
+                            Id = new Guid("3d7f7117-b62f-4409-9ed4-7d15c4bf81b2"),
                             AuthorId = "375587fa-0370-4d26-b72f-5acc5be09121",
-                            DateCreated = new DateTime(2020, 6, 23, 3, 36, 30, 647, DateTimeKind.Utc).AddTicks(6679),
-                            DateModified = new DateTime(2020, 6, 23, 3, 36, 30, 647, DateTimeKind.Utc).AddTicks(6680),
+                            DateCreated = new DateTime(2020, 6, 23, 2, 23, 21, 402, DateTimeKind.Utc).AddTicks(3782),
+                            DateModified = new DateTime(2020, 6, 23, 2, 23, 21, 402, DateTimeKind.Utc).AddTicks(3784),
                             ImageUrl = "https://res.cloudinary.com/food-ng/image/upload/q_46/v1592761406/Static%20Images/Nigerian-Dishes.jpg",
                             IsActive = true,
                             Name = "Nigerian Dishes",
@@ -165,10 +167,10 @@ namespace FoodDotNg.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("83ac75a5-47d9-4830-8262-93135e957789"),
+                            Id = new Guid("77551627-7daa-413e-8372-b5bfed6f17b3"),
                             AuthorId = "375587fa-0370-4d26-b72f-5acc5be09121",
-                            DateCreated = new DateTime(2020, 6, 23, 3, 36, 30, 647, DateTimeKind.Utc).AddTicks(6687),
-                            DateModified = new DateTime(2020, 6, 23, 3, 36, 30, 647, DateTimeKind.Utc).AddTicks(6688),
+                            DateCreated = new DateTime(2020, 6, 23, 2, 23, 21, 402, DateTimeKind.Utc).AddTicks(3787),
+                            DateModified = new DateTime(2020, 6, 23, 2, 23, 21, 402, DateTimeKind.Utc).AddTicks(3788),
                             ImageUrl = "https://res.cloudinary.com/food-ng/image/upload/q_42/v1592767042/Static%20Images/Health%20and%20Tips.jpg",
                             IsActive = true,
                             Name = "Health tips",
@@ -216,6 +218,8 @@ namespace FoodDotNg.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
 
                     b.ToTable("Articles");
                 });
@@ -440,6 +444,15 @@ namespace FoodDotNg.Data.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("FoodDotNg.Data.Articles", b =>
+                {
+                    b.HasOne("FoodDotNg.Data.ArticleCategories", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

@@ -1,33 +1,31 @@
 ﻿@page "{postId:Guid}"
-@model FoodDotNg.Pages.BlogPostModel
+@model FoodDotNg.Pages.EventPostModel
 @inject FoodDotNgDbContext _context
 @inject UserManager<ApplicationUser> userManager
 @{
-    ViewData["Title"] = "BlogPost";
-    var category = await _context.ArticleCategories.FindAsync(Model.BlogPost.CategoryId);
-
+    ViewData["Title"] = "EventPost";
 }
 
 <style>
-    .postImage{
-        height:450px;
-        width:fit-content;
-        object-fit:cover;
-        width:max-content;
+    .postImage {
+        height: 450px;
+        width: fit-content;
+        object-fit: cover;
+        width: max-content;
         width:100%;
     }
 </style>
 
 <!-- ****** Breadcumb Area Start ****** -->
-<div class="breadcumb-area" style="background-image: url(@category.ImageUrl);">
+<div class="breadcumb-area" style="background-image: url(https://res.cloudinary.com/food-ng/image/upload/v1592760995/Events-home-page.jpg);">
     <div class="container h-100">
         <div class="row h-100 align-items-center">
             <div class="col-12">
                 <div class="bradcumb-title text-center">
-                    @{ 
+                    @{
 
                     }
-                    <h2>@category.Name</h2>
+                    <h2>Events</h2>
                 </div>
             </div>
         </div>
@@ -40,7 +38,7 @@
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="#"><i class="fa fa-home" aria-hidden="true"></i> Home</a></li>
-                        <li class="breadcrumb-item"><a href="/ContentList/?pageName=@category.Name">@category.Name</a></li>
+                        <li class="breadcrumb-item"><a href="/Events">Food Events</a></li>
                         <li class="breadcrumb-item active" aria-current="page">@Model.BlogPost.Name</li>
                     </ol>
                 </nav>
@@ -61,9 +59,9 @@
                         <div class="single-post">
                             <!-- Post Thumb -->
                             <div class="post-thumb">
-                                <figure style="margin-bottom:25px;">
+                                <figure style="margin-bottom:25px">
                                     <img style="margin-bottom:5px;" class="postImage" src="@Model.BlogPost.ImageUrl" alt="">
-                                    <figcaption style="opacity:0.3; text-align:center; font-size:16px;">Image Source - @Model.BlogPost.ImageSource</figcaption>
+                                    <figcaption style="text-align:center; opacity:0.3">image source @Model.BlogPost.ImageSource</figcaption>
                                 </figure>
                             </div>
                             <!-- Post Content -->
@@ -78,7 +76,7 @@
                                             <a href="#">by @user.UserName</a>
                                         </div>
                                         <div class="post-author">
-                                            <a href="#">@category.Name</a>
+                                            <a href="#">Event</a>
                                         </div>
                                         <!-- Post Date -->
                                         <div class="post-date">
@@ -89,8 +87,11 @@
                                 <a href="#">
                                     <h2 class="post-headline">@Model.BlogPost.Name</h2>
                                 </a>
+                                <div>
+                                    <p>@Model.BlogPost.StartDate.ToLongDateString() - @Model.BlogPost.EndDate.ToLongDateString() - By <b>@Model.BlogPost.Organizer</b></p>
+                                </div>
                                 <div id="blogpost">
-                                    @Html.Raw(Model.BlogPost.ArticlePost)
+                                    @Html.Raw(Model.BlogPost.EventPost)
                                 </div>
 
                             </div>
@@ -100,16 +101,14 @@
                         <div class="related-post-area section_padding_50">
                             <h4 class="mb-30">Related post</h4>
 
-
                             <div class="related-post-slider owl-carousel">
-
-                                @if (Model.AllArticles.Count <= 0)
+                                @if (Model.Events.Count <= 0)
                                 {
                                     <h5>Nothing to show</h5>
                                 }
                                 else
                                 {
-                                    @foreach (var post in Model.AllArticles)
+                                    @foreach (var post in Model.Events)
                                     {
                                         <!-- Single Related Post-->
                                         <div class="single-post">
@@ -125,15 +124,11 @@
                                                         <div class="post-author">
                                                             @{
                                                                 var usser = await userManager.FindByIdAsync(post.AuthorId);
-
                                                             }
                                                             <a href="#">@usser.UserName</a>
                                                         </div>
                                                         <div class="post-author">
-                                                            @{ 
-                                                                var cat = _context.ArticleCategories.Find(post.CategoryId);
-                                                            }
-                                                            <a href="#">@cat.Name</a>
+                                                            <a href="/Events">Events</a>
                                                         </div>
                                                         <!-- Post Date -->
                                                         <div class="post-date">
@@ -141,7 +136,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <a href="/BlogPost/@post.Id">
+                                                <a href="/EventPost/@post.Id">
                                                     <h6>@post.Name</h6>
                                                 </a>
                                             </div>
@@ -158,4 +153,6 @@
         </div>
     </div>
 </section>
+
+
 
