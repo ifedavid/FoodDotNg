@@ -35,7 +35,10 @@ namespace FoodDotNg.Areas.Identity.Pages.Account
 
         public async Task<string> UploadImage(ContentModel ContentModel)
         {
-            var myAccount = new CloudinaryDotNet.Account { ApiKey = "917462976781737", ApiSecret = "N6Jod9FI_27eYX7pZNLfcs7Qg-c", Cloud = "food-ng" };
+            string apiKey = Environment.GetEnvironmentVariable("CloudinaryApiKey");
+            string apiSecret = Environment.GetEnvironmentVariable("CloudinaryApiSecret");
+            string cloud = Environment.GetEnvironmentVariable("CloudinaryName");
+            var myAccount = new CloudinaryDotNet.Account { ApiKey = apiKey, ApiSecret = apiSecret, Cloud = cloud };
             Cloudinary _cloudinary = new Cloudinary(myAccount);
 
             string wwwRootPath = _hostEnvironment.WebRootPath;

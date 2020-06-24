@@ -27,6 +27,8 @@
     <Compile Remove="Data\Migrations\20200616031437_AddAuthor migration.Designer.cs" />
     <Compile Remove="Data\Migrations\20200623033041_finishing touches7.cs" />
     <Compile Remove="Data\Migrations\20200623033041_finishing touches7.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200624191822_prod db.cs" />
+    <Compile Remove="Data\Migrations\20200624191822_prod db.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

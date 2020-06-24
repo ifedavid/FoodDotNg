@@ -3,7 +3,7 @@
 @inject FoodDotNgDbContext _context
 @inject UserManager<ApplicationUser> userManager
 @{
-    ViewData["Title"] = "BlogPost";
+    ViewData["Title"] = Model.BlogPost.Name;
     var category = await _context.ArticleCategories.FindAsync(Model.BlogPost.CategoryId);
 
 }
