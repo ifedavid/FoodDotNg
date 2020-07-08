@@ -680,20 +680,17 @@ li {
 
 .single-post h2,
 .single-post h4 {
-    margin: 10px 0;
+    margin: 1em 0;
     color: #232d37;
     -webkit-transition-duration: 300ms;
     transition-duration: 300ms;
     text-transform: capitalize;
 }
 
-.single-post h2:hover,
-.single-post h4:hover {
-    color: #fc6c3f;
-}
 
 .single-post p {
     color: #51545f;
+    margin:20px 0;
 }
 
 .single-post .read-more {
