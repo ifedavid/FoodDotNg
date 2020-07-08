@@ -35,6 +35,7 @@ namespace FoodDotNg.Pages
 
             string pageType = pageInfo[0];
             ViewData["PageType"] = pageType;
+            
             string Id = pageInfo[1];
             Guid postId = Guid.Parse(Id);
 
