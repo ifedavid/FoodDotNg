@@ -74,6 +74,10 @@
                     <td>
                     <a class="btn btn-secondary" href="/BlogPost/@article.Id">View</a>
                     </td>
+
+                        <td>
+                    <a class="btn btn-dark" asp-page="EditPostContent" asp-route-postInfo="Article;@article.Id">Edit</a>
+                    </td>
                 </tr>
             }
         }
@@ -139,6 +143,10 @@
                     
                     <td>
                     <a class="btn btn-secondary" href="/RecipePost/@recipe.Id">View</a>
+                    </td>
+
+                        <td>
+                            <a class="btn btn-dark" asp-page="EditPostContent" asp-route-postInfo="Recipe;@recipe.Id">Edit</a>
                     </td>
                 </tr>
             }
@@ -214,6 +222,10 @@
                     
                     <td>
                     <a class="btn btn-secondary" href="/EventPost/@eventt.Id">View</a>
+                    </td>
+
+                     <td>
+                         <a class="btn btn-dark" asp-page="EditPostContent" asp-route-postInfo="Event;@eventt.Id">Edit</a>
                     </td>
 
                 </tr>

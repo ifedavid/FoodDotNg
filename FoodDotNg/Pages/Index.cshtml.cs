@@ -31,7 +31,7 @@ namespace FoodDotNg.Pages
 
             AllArticles = _context.Articles.Where(a => a.Status == "Approved").ToList();
 
-            InterviewArticle = AllArticles.Where(ia => ia.CategoryId == category.Id).FirstOrDefault();
+            InterviewArticle = AllArticles.Where(ia => ia.CategoryId == category.Id).OrderBy(ia => ia.DateCreated).FirstOrDefault();
 
             PopularPost = AllArticles.OrderBy(pp => pp.Id).Take(6).ToList();
 
