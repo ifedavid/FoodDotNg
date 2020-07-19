@@ -18,6 +18,9 @@ namespace FoodDotNg.Pages
 
         [BindProperty]
         public string PostEdit { get; set; }
+
+        [BindProperty]
+        public string PostTitle { get; set; }
         public EditPostContentModel(FoodDotNgDbContext context)
         {
             _context = context;
@@ -83,6 +86,7 @@ namespace FoodDotNg.Pages
                 var article = await _context.Articles.FindAsync(postId);
 
                 article.ArticlePost = PostEdit;
+                article.Name = PostTitle;
 
                 _context.Entry(article).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
@@ -94,6 +98,7 @@ namespace FoodDotNg.Pages
                 var eventt = await _context.Events.FindAsync(postId);
 
                 eventt.EventPost = PostEdit;
+                eventt.Name = PostTitle;
 
                 _context.Entry(eventt).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
@@ -105,6 +110,7 @@ namespace FoodDotNg.Pages
                 var recipe = await _context.Recipes.FindAsync(postId);
 
                 recipe.RecipePost = PostEdit;
+                recipe.Name = PostTitle;
 
                 _context.Entry(recipe).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
