@@ -1,0 +1,105 @@
+﻿@page 
+@model FoodDotNg.Pages.EditPostContentModel
+@{
+    ViewData["Title"] = "EditPostContent";
+    Layout = "_WriterLayout";
+    var pageType = (string)ViewData["pageType"];
+}
+
+@{
+
+
+    if (pageType == "Article")
+    {
+        <div style="padding-top:3em;">
+
+            <h1> Editing for @Model.EditArticle.Name</h1>
+
+            <form style="padding-top:1em;" method="post">
+                <label>Blog Title</label>
+                <div class="form-group">
+                    <input required type="text" value="@Model.EditArticle.Name" asp-for="@Model.PostTitle" class="form-control" />
+                </div>
+
+
+                <label>Blog Post</label>
+                <div class="form-group">
+                    <input type="text" value="@Model.EditArticle.ArticlePost" class="form-control" />
+                </div>
+
+                <div class="form-group">
+                    <label>Any extra Recipe talk</label>
+                    <textarea type="text" asp-for="@Model.PostEdit" required class="form-control"></textarea>
+                </div>
+
+                <button asp-page-handler="Edit" class="btn btn-primary" asp-route-postInfo="Article;@Model.EditArticle.Id">Edit</button>
+            </form>
+
+        </div>
+    }
+
+    if (pageType == "Event")
+    {
+        <div style="padding-top:3em;">
+
+            <h1> Editing for @Model.EditEvent.Name</h1>
+
+            <form style="padding-top:1em;" method="post">
+
+
+                <label>Blog Title</label>
+                <div class="form-group">
+                    <input type="text" value="@Model.EditEvent.Name" asp-for="@Model.PostTitle" class="form-control" />
+                </div>
+
+
+                <label>Blog Post</label>
+                <div class="form-group">
+                    <input type="text" value="@Model.EditEvent.EventPost" class="form-control" />
+                </div>
+
+                <div class="form-group">
+                    <textarea asp-for="@Model.PostEdit" required class="form-control">@Model.EditEvent.EventPost</textarea>
+                </div>
+
+                <button asp-page-handler="Edit" class="btn btn-primary" asp-route-postInfo="Event;@Model.EditEvent.Id">Edit</button>
+            </form>
+
+        </div>
+    }
+
+    if (pageType == "Recipe")
+    {
+        <div style="padding-top:3em;">
+
+            <h1> Editing for @Model.EditRecipe.Name</h1>
+
+            <form style="padding-top:1em;" method="post">
+
+
+                <label>Blog Title</label>
+                <div class="form-group">
+                    <input type="text" value="@Model.EditRecipe.Name" asp-for="@Model.PostTitle" class="form-control" />
+                </div>
+
+
+                <label>Blog Post</label>
+                <div class="form-group">
+                    <input type="text" value="@Model.EditRecipe.RecipePost" class="form-control" />
+                </div>
+
+                <div class="form-group">
+                    <label>Any extra Recipe talk</label>
+                    <textarea type="text" asp-for="@Model.PostEdit" required class="form-control"></textarea>
+                </div>
+
+                <button asp-page-handler="Edit" class="btn btn-primary" asp-route-postInfo="Recipe;@Model.EditRecipe.Id">Edit</button>
+            </form>
+
+        </div>
+    }
+}
+
+
+
+

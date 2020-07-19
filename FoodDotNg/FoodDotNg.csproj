@@ -27,6 +27,8 @@
     <Compile Remove="Data\Migrations\20200616031437_AddAuthor migration.Designer.cs" />
     <Compile Remove="Data\Migrations\20200623033041_finishing touches7.cs" />
     <Compile Remove="Data\Migrations\20200623033041_finishing touches7.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200624191822_prod db.cs" />
+    <Compile Remove="Data\Migrations\20200624191822_prod db.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -39,10 +41,6 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.4" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.3" />
     <PackageReference Include="ReflectionIT.Mvc.Paging" Version="4.0.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="wwwroot\images\" />
   </ItemGroup>
 
 </Project>

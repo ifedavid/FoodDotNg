@@ -3,16 +3,20 @@
 @inject FoodDotNgDbContext _context
 @inject UserManager<ApplicationUser> userManager
 @{
-    ViewData["Title"] = "EventPost";
+    ViewData["Title"] = Model.BlogPost.Name;
 }
 
 <style>
-    .postImage {
+    .postImagep {
         height: 450px;
         width: fit-content;
         object-fit: cover;
         width: max-content;
         width:100%;
+    }
+
+    .Block {
+        margin: 4.3em 0;
     }
 </style>
 
@@ -129,10 +133,6 @@
                                                         </div>
                                                         <div class="post-author">
                                                             <a href="/Events">Events</a>
-                                                        </div>
-                                                        <!-- Post Date -->
-                                                        <div class="post-date">
-                                                            <a href="#">@post.DateCreated.ToShortDateString()</a>
                                                         </div>
                                                     </div>
                                                 </div>

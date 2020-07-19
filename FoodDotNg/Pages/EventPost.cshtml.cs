@@ -22,7 +22,7 @@ namespace FoodDotNg.Pages
         }
         public async Task<IActionResult> OnGet(Guid postId)
         {
-            Events = _context.Events.ToList();
+            Events = _context.Events.Where(e => e.Status == "Approved").ToList();
             BlogPost = await _context.Events.FindAsync(postId);
             if (BlogPost == null)
             {

@@ -3,7 +3,7 @@
 @inject FoodDotNgDbContext _context
 @inject UserManager<ApplicationUser> userManager
 @{
-    ViewData["Title"] = "RecipePost";
+    ViewData["Title"] = Model.BlogPost.Name;
 }
 
 <style>
@@ -13,6 +13,10 @@
         object-fit: cover;
         width: max-content;
         width:100%
+    }
+
+    .Block {
+        margin: 4.3em 0;
     }
 </style>
 
@@ -129,10 +133,6 @@
                                                         </div>
                                                         <div class="post-author">
                                                             <a href="#">Recipe</a>
-                                                        </div>
-                                                        <!-- Post Date -->
-                                                        <div class="post-date">
-                                                            <a href="#">@post.DateCreated</a>
                                                         </div>
                                                     </div>
                                                 </div>
