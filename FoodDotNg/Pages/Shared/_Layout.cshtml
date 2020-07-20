@@ -4,6 +4,12 @@
     @{
         @inject FoodDotNgDbContext _context;
     }
+
+
+    <style>
+
+    </style>
+
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - FoodDotNg</title>
@@ -70,7 +76,7 @@
                 <!-- Logo Area Start -->
                 <div class="col-12">
                     <div class="logo_area text-center">
-                        <a href="/index" class="yummy-logo">FoodDotNg <p style="font-size:18px;">For Food Only...</p></a>
+                        <a href="/index" class="yummy-logo"><img style="height:50%; width:50%;" src="images/fooddotng lOGO 2.jpg" /></a>
                     </div>
                 </div>
             </div>
@@ -128,7 +134,7 @@
     </div>
 
     <!-- ****** Instagram Area Start ****** -->
- <hr />
+
 
     @*<div class="container">
         <div class="row">
@@ -158,20 +164,70 @@
 
     <!-- ****** Footer Social Icon Area End ****** -->
     <!-- ****** Footer Menu Area Start ****** -->
-    <footer class="footer_area">
+<div style="padding-top:3em;"></div>
+<hr />
+<footer class="footer_area">
+    <div class="mt-5 footer">
+
+        <style>
+            .textSize {
+                font-size: 15px;
+            }
+            .Acolor {
+                color: #51545f;
+               
+            }
+                .Acolor:hover {
+                    color: #fc6c3f;
+                }
+            .footer {
+                background: white;
+                color: #fc6c3f;
+            }
+          ul
+
+            {
+                list-style-type: none;
+            }
+        </style>
+
         <div class="container">
+            <div class="row">
+                <div class="col-lg-5 col-xs-12 about-company">
+                    <h4 style="color:#fc6c3f">Hey there!</h4>
+                    <p class="pr-5 textSize">If you've made it this far, you probably like food a lot? or maybe you're just curious and you like what you see. Either ways, we 
+                    Love food and are always talking about it so tell everyone you know about us!</p>
+                </div>
+                <div class="col-lg-3 col-xs-12 links">
+                    <h4 style="color:#fc6c3f" class="mt-lg-0 mt-sm-3">Links</h4>
+                    <ul class="m-0 p-0">
+                        <li>- <a class="Acolor" href="/Index">Home</a></li>
+                        <li>- <a class="Acolor" href="/Recipes">Recipes</a></li>
+                        <li>- <a class="Acolor" href="/Events">Events</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 col-xs-12 location">
+                    <h4 style="color:#fc6c3f" class="mt-lg-0 mt-sm-4">Location</h4>
+                    <p class="textSize">We're mostly everywhere for now.</p>
+                    <p class="mb-0 textSize"><i class="fa fa-phone mr-3"></i>+2348155718975</p>
+                    <p class="textSize"><i class="fa fa-envelope-o mr-3"></i>FoodDotNg@gmail.com</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    @*<div class="container">
             <div class="row">
                 <div class="col-12">
 
                     <div class="footer-content">
-                        <!-- Logo Area Start -->
+                         Logo Area Start
                         <div class="footer-logo-area text-center">
-                            <a href="/index" class="yummy-logo">FoodDotNg <p style="font-size:18px;">For Food Only...</p></a>
+                            <a href="/index" class="yummy-logo"><img style="height:50%; width:50%;" src="images/fooddotng lOGO 2.jpg" /></a>
                         </div>
-                        <!-- Menu Area Start -->
+                         Menu Area Start
                         <nav class="navbar navbar-expand-lg">
                             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#yummyfood-footer-nav" aria-controls="yummyfood-footer-nav" aria-expanded="false" aria-label="Toggle navigation"><i class="fa fa-bars" aria-hidden="true"></i> Menu</button>
-                            <!-- Menu Area Start -->
+                             Menu Area Start
                             <div class="collapse navbar-collapse justify-content-center" id="yummyfood-footer-nav">
                                 <ul class="navbar-nav">
                                     <li class="@(view == "/Index" || view == "" ? "nav-item active": "nav-item")">
@@ -180,9 +236,9 @@
                                     <li class="@(view == "/Recipes" ? "nav-item active": "nav-item")">
                                         <a class="nav-link" href="/Recipes">Recipes</a>
                                     </li>
-                                    <li class="@(view == "/ContentList"? "nav-item dropdown active": "nav-item dropdown")">
+                                    <li  class="@(view == "/ContentList"? "nav-item dropdown active": "nav-item dropdown")">
                                         <a class="nav-link dropdown-toggle" href="#" id="yummyDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Articles</a>
-                                        <div class="dropdown-menu" aria-labelledby="yummyDropdown">
+                                        <div style="z-index:100;" class="dropdown-menu" aria-labelledby="yummyDropdown">
                                             @{
                                                 @foreach (var category in categories)
                                                 {
@@ -203,19 +259,20 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>*@
 
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <!-- Copywrite Text -->
-                    <div class="copy_right_text text-center">
-                        <p>Copyright @@ @DateTime.UtcNow.Year All rights reserved. With <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://www.linkedin.com/in/ifeoluwa-onigbinde-b491b0169/" target="_blank">Ifeoluwa</a></p>
-                    </div>
+
+
+    <div style="padding-top:2em;" class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="copy_right_text text-center">
+                    <p>FoodDotNg @@ @DateTime.UtcNow.Year. Made With <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://www.linkedin.com/in/ifeoluwa-onigbinde-b491b0169/" target="_blank">This Guy!</a></p>
                 </div>
             </div>
         </div>
-    </footer>
+    </div>
+</footer>
     <!-- ****** Footer Menu Area End ****** -->
     <!-- Jquery-2.2.4 js -->
     <script src="~/js/jquery/jquery-2.2.4.min.js"></script>
