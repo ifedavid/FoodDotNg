@@ -3,7 +3,7 @@
 @inject UserManager<ApplicationUser> _userManager;
 @inject FoodDotNgDbContext _context;
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Home";
     var categories = _context.ArticleCategories.ToList();
 }
 
@@ -155,7 +155,7 @@ else
                     <!--Recipes-->
                     @if (Model.IndexRecipe == null || Model.IndexRecipe.Count <= 0)
                     {
-                        <h5>Something Went wrong somewhere. Please try again</h5>
+                        
                     }
                     else
                     {
@@ -205,7 +205,7 @@ else
                     <!--Events-->
                     @if (Model.IndexEvents == null || Model.IndexEvents.Count <= 0)
                     {
-                        <h5>Nothing to show, Something went wrong. Pleas try again</h5>
+                        
                     }
                     else
                     {
@@ -322,9 +322,9 @@ else
                             <h6>About Us</h6>
                         </div>
                         <div class="about-me-widget-thumb">
-                            <img src="img/about-img/1.jpg" alt="">
+                            <img src="images/fooddotng lOGO 2.jpg" alt="FoodDotNg">
                         </div>
-                        <h4 class="font-shadow-into-light">FoodDotNg</h4>
+                        <h4 class="font-shadow-into-light">We are for food only...</h4>
                         <p>We're committed to bringing you all the beauty and happenings in the Nigerian food industry</p>
                     </div>
 
